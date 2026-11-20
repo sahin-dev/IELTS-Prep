@@ -10,6 +10,9 @@ export const readingChapters: Record<string, Chapter> = { ...readingChaptersA, .
 export const listeningChapters: Record<string, Chapter> = { ...listeningChaptersA, ...listeningChaptersB };
 
 export { listeningFundamentals, readingFundamentals, studyMethod } from './fundamentals';
+export { examFormat } from './exam-a';
+export { examScoring } from './exam-b';
+export { examDay } from './exam-c';
 export { task1Chapters, task1Method } from './writing-t1';
 export { letterChapters, lettersMethod, task2Chapters, task2Method } from './writing-t2';
 export { speakingChapters, speakingFundamentals } from './speaking';

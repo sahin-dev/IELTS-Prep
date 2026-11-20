@@ -6,10 +6,12 @@ export interface TocPart { id: string; title: string; intro: string; chapters: T
 
 export const bookParts: TocPart[] = [
   {
-    id: 'start', title: 'Getting started', intro: 'Understand the test, set a target and learn how to study before you start the skills.',
+    id: 'start', title: 'Getting started', intro: 'Understand the test, how it is scored and how test day works; then set a realistic target and learn how to study.',
     chapters: [
-      { href: '/book/how-to-study', title: 'How to prepare: the study method', sub: 'Diagnose, learn, practise, review: the loop that raises your band' },
-      { href: '/exam', title: 'The IELTS test explained', sub: 'Format, timing, Academic vs General Training, how bands are calculated' },
+      { href: '/exam', title: 'The IELTS test explained', sub: 'Academic vs General Training, the four skills, every question type, delivery in 2026' },
+      { href: '/exam/scoring', title: 'How IELTS is scored', sub: 'The band scale, marking criteria, overall band rounding, half bands' },
+      { href: '/exam/test-day', title: 'Booking, test day and results', sub: 'Registration, test-day rules, results, remarks, retakes, common mistakes' },
+      { href: '/book/how-to-study', title: 'How to prepare: target and study method', sub: 'Set a realistic target, then diagnose, learn, practise, review' },
       { href: '/progress', title: 'Your 8-week study plan', sub: 'A day-by-day plan and your progress record' }
     ]
   },

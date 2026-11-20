@@ -1,5 +1,6 @@
 /* Sub-navigation for each section of the site */
 export const SECTION_NAV: Record<string, [string, string][]> = {
+  exam: [['The test explained', '/exam'], ['How IELTS is scored', '/exam/scoring'], ['Booking, test day & results', '/exam/test-day'], ['How to prepare', '/book/how-to-study'], ['Band calculator', '/calculator']],
   listening: [['Overview & question types', '/listening'], ['Fundamentals', '/listening/fundamentals'], ['Practice sets', '/practice/listening'], ['Dictation drills', '/practice/drills'], ['Mock test', '/mock-tests/listening-1'], ['Directions vocabulary', '/vocabulary/l-directions'], ['Numbers & time vocabulary', '/vocabulary/l-time']],
   reading: [['Overview & question types', '/reading'], ['Fundamentals', '/reading/fundamentals'], ['What to answer first', '/reading/answer-order'], ['Practice sets', '/practice/reading'], ['Mock test', '/mock-tests/reading-1'], ['Synonyms & paraphrase', '/vocabulary/r-synonyms'], ['Academic words', '/vocabulary/academic']],
   writing: [['Overview & method', '/writing'], ['Task 1 Academic', '/writing/task-1'], ['Task 1 Letters (GT)', '/writing/letters'], ['Task 2 Essays', '/writing/task-2'], ['Idea bank', '/writing/ideas'], ['Band descriptors', '/writing/band-descriptors'], ['Write & get feedback', '/practice/writing']],

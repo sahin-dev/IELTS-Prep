@@ -77,7 +77,7 @@ vocabBanks.forEach(b => {
 });
 
 // Study plan links point to real routes
-const staticRoutes = ['/book', '/book/how-to-study', '/reading/fundamentals', '/listening/fundamentals', '/writing/task-1', '/writing/task-2', '/writing/letters', '/speaking/topics', '/speaking/phrases', '/', '/exam', '/listening', '/reading', '/reading/answer-order', '/speaking', '/grammar', '/mock-tests', '/calculator', '/search', '/progress', '/resources', '/practice', '/practice/writing', '/practice/speaking', '/practice/drills', '/writing', '/writing/ideas', '/writing/band-descriptors', '/speaking/pronunciation', '/speaking/cue-cards', '/vocabulary'];
+const staticRoutes = ['/book', '/book/how-to-study', '/exam/scoring', '/exam/test-day', '/reading/fundamentals', '/listening/fundamentals', '/writing/task-1', '/writing/task-2', '/writing/letters', '/speaking/topics', '/speaking/phrases', '/', '/exam', '/listening', '/reading', '/reading/answer-order', '/speaking', '/grammar', '/mock-tests', '/calculator', '/search', '/progress', '/resources', '/practice', '/practice/writing', '/practice/speaking', '/practice/drills', '/writing', '/writing/ideas', '/writing/band-descriptors', '/speaking/pronunciation', '/speaking/cue-cards', '/vocabulary'];
 function routeOk(h: string) {
   let ok = staticRoutes.includes(h);
   let m: RegExpMatchArray | null;
@@ -102,14 +102,29 @@ book.bookChapters.forEach(c => {
   seen.add(c.href);
   if (!routeOk(c.href)) err('book TOC link broken: ' + c.href);
 });
+const exerciseIds = new Set<string>();
 function checkChapter(ch: Chapter | undefined, where: string) {
   if (!ch) return err('missing chapter: ' + where);
+  if (ch.exercises) {
+    const id = ch.exercises.id;
+    if (!id.startsWith('ch-')) err(`${where}: exercise id ${id} must start with "ch-"`);
+    if (exerciseIds.has(id) || ids.has(id)) err(`${where}: duplicate exercise id ${id}`);
+    exerciseIds.add(id);
+    checkGroups(ch.exercises.groups, where + ' exercises');
+    ch.exercises.groups.forEach((g, gi) => g.questions.forEach(q => { if (g.kind !== 'open' && !q.x) err(`${where} exercises group ${gi} q${q.n}: every exercise needs an explanation`); }));
+  }
+  ch.references?.forEach(r => {
+    if (r.url && !/^https:\/\//.test(r.url) && !(r.url.startsWith('/') && routeOk(r.url))) err(`${where}: reference "${r.title}" has a bad or broken url ${r.url}`);
+  });
+  if (ch.verified && !/^\d{4}-\d{2}-\d{2}$/.test(ch.verified)) err(`${where}: verified must be YYYY-MM-DD`);
   if (ch.intro.length < 200) err(where + ': intro too short');
   if (ch.method.length < 3) err(where + ': method needs at least 3 steps');
   (['dos', 'donts', 'careful', 'checklist', 'summary'] as const).forEach(k => { if (!ch[k].length) err(`${where}: empty ${k}`); });
   ch.worked?.forEach((w, i) => { if (!w.walk.length) err(`${where}: worked example ${i + 1} has no walkthrough`); if (w.figure) renderChart(w.figure); });
   // Unbalanced tags are a common authoring slip
   const html = JSON.stringify(ch);
+  // Every internal link must point to a real page
+  [...html.matchAll(/href=\\"(\/[^"#?\\]*)/g)].forEach(m => { if (!routeOk(m[1])) err(`${where}: broken internal link ${m[1]}`); });
   ['b', 'i', 'p', 'ul', 'ol', 'li', 'table', 'tr', 'td', 'th', 'div', 'h4'].forEach(t => {
     const open = (html.match(new RegExp(`<${t}[ >]`, 'g')) || []).length, close = (html.match(new RegExp(`</${t}>`, 'g')) || []).length;
     if (open !== close) err(`${where}: <${t}> opened ${open} times, closed ${close}`);
@@ -123,7 +138,7 @@ writingTask2.types.forEach(t => checkChapter(book.task2Chapters[t.id], 'task-2/'
 speaking.parts.forEach(p => checkChapter(book.speakingChapters[p.id], 'speaking/' + p.id));
 grammar.forEach(g => checkChapter(book.grammarChapters[g.id], 'grammar/' + g.id));
 Object.entries(book.vocabChapters).forEach(([id, ch]) => { if (!vids.has(id)) err('vocab chapter for unknown bank ' + id); checkChapter(ch, 'vocabulary/' + id); });
-([['study method', book.studyMethod], ['reading fundamentals', book.readingFundamentals], ['listening fundamentals', book.listeningFundamentals], ['task 1 method', book.task1Method], ['letters method', book.lettersMethod], ['task 2 method', book.task2Method], ['speaking fundamentals', book.speakingFundamentals]] as [string, Chapter][]).forEach(([n, ch]) => checkChapter(ch, n));
+([['exam format', book.examFormat], ['exam scoring', book.examScoring], ['exam test day', book.examDay], ['study method', book.studyMethod], ['reading fundamentals', book.readingFundamentals], ['listening fundamentals', book.listeningFundamentals], ['task 1 method', book.task1Method], ['letters method', book.lettersMethod], ['task 2 method', book.task2Method], ['speaking fundamentals', book.speakingFundamentals]] as [string, Chapter][]).forEach(([n, ch]) => checkChapter(ch, n));
 
 const questions = allSets.reduce((a, s) => a + totalMarks(s.groups), 0) + grammar.reduce((a, g) => a + totalMarks(g.exercises), 0) + totalMarks(pronunciation.exercises);
 console.log(`Sets: ${allSets.length} (${allSets.filter(s => s.id.startsWith('r-')).length} reading, ${allSets.filter(s => s.id.startsWith('l-')).length} listening) · mock tests: ${mockTests.length} · writing prompts: ${writingTasks.length}`);

@@ -1,22 +1,19 @@
 import type { Metadata } from 'next';
-import { Html, PageHeader, Tile } from '@/components/ui';
-import { overview } from '@/content';
+import { PageHeader } from '@/components/ui';
+import { SubNav } from '@/components/client-ui';
+import { ChapterView } from '@/components/ChapterView';
+import { SECTION_NAV } from '@/lib/nav';
+import { examFormat } from '@/content/book';
 
-export const metadata: Metadata = { title: 'Exam format & scoring' };
+export const metadata: Metadata = { title: 'The IELTS test explained' };
 
 export default function ExamPage() {
   return (
     <>
-      <PageHeader crumbs={[['Exam format & scoring']]} title="IELTS Exam Format & Scoring"
-        lead="IELTS tests four skills. Listening, Reading and Writing are taken on the same day without breaks; Speaking may be on the same day or up to a week before or after." />
-      <div className="grid">
-        {overview.sections.map(s => (
-          <Tile key={s.skill} href={`/${s.skill}`} accent={s.skill} title={s.name}>
-            <b>{s.time}</b><br />{s.questions}<br /><br />{s.desc}
-          </Tile>
-        ))}
-      </div>
-      <Html html={overview.html} />
+      <PageHeader crumbs={[['The IELTS Book', '/book'], ['The IELTS test explained']]} title="The IELTS test explained"
+        lead="What IELTS is, Academic or General Training, the four skills in detail, every question type, and how the test is delivered in 2026." />
+      <SubNav items={SECTION_NAV.exam} />
+      <ChapterView ch={examFormat} accent="primary" />
     </>
   );
 }

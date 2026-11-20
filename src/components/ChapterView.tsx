@@ -3,6 +3,9 @@ import type { CSSProperties, ReactNode } from 'react';
 import type { Chapter, WorkedExample } from '@/lib/types';
 import { Chart, Html, List } from './ui';
 import ListeningPlayer from './ListeningPlayer';
+import TestRunner from './TestRunner';
+
+const longDate = (iso: string) => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 type Pos = 'intro' | 'method' | 'sections' | 'worked' | 'careful' | 'end';
 export interface ChapterExtra { id: string; title: string; node: ReactNode; after: Pos }
@@ -93,6 +96,10 @@ export function ChapterView({ ch, accent, extras = [] }: { ch: Chapter; accent: 
   if (ch.faq?.length) add('faq', 'Questions students often ask', ch.faq.map((f, i) => (
     <details className="acc" key={i}><summary dangerouslySetInnerHTML={{ __html: f.q }} /><Html className="acc-body" html={f.a} /></details>
   )));
+  if (ch.exercises) add('exercises', 'Exercises with answers and explanations', <>
+    <Html className="prose" html={ch.exercises.intro || '<p>Answer every question, then press <b>Check answers</b>. Each answer comes with an explanation: read it even when you were right, because the reasoning is what you are learning.</p>'} />
+    <TestRunner set={{ id: ch.exercises.id, type: 'chapter', title: ch.exercises.title, groups: ch.exercises.groups }} skill="book" embedded />
+  </>);
   add('checklist', 'Final checklist before you move on', <div className="card"><List className="checklist" items={ch.checklist} /></div>);
   flush('end');
 
@@ -100,10 +107,26 @@ export function ChapterView({ ch, accent, extras = [] }: { ch: Chapter; accent: 
     <div className="chapter" style={{ '--accent': `var(--${accent})` } as CSSProperties}>
       <nav className="chapter-toc" aria-label="In this chapter">
         <h3>In this chapter</h3>
-        <ol>{blocks.map(b => <li key={b.id}><a href={`#${b.id}`}>{b.title}</a></li>)}<li><a href="#takeaways">Key takeaways</a></li></ol>
+        <ol>
+          {blocks.map(b => <li key={b.id}><a href={`#${b.id}`}>{b.title}</a></li>)}
+          <li><a href="#takeaways">Key takeaways</a></li>
+          {ch.references?.length ? <li><a href="#sources">Sources and further reading</a></li> : null}
+        </ol>
+        {ch.verified && <p className="verified">Exam facts checked against official IELTS sources on {longDate(ch.verified)}. IELTS policies change: confirm details for your country on <a href="https://ielts.org" target="_blank" rel="noopener noreferrer">ielts.org</a> before you book.</p>}
       </nav>
       {blocks.map((b, i) => <section id={b.id} key={b.id}><h2><span className="sec-no">{i + 1}.</span>{b.title}</h2>{b.node}</section>)}
       <section id="takeaways" className="takeaways" style={{ marginTop: 30 }}><h2>Key takeaways</h2><List className="checklist" items={ch.summary} /></section>
+      {ch.references?.length ? (
+        <section id="sources" className="sources">
+          <h2>Sources and further reading</h2>
+          <ol>{ch.references.map((r, i) => (
+            <li key={i}>
+              {r.url ? (r.url.startsWith('http') ? <a href={r.url} target="_blank" rel="noopener noreferrer">{r.title}</a> : <a href={r.url}>{r.title}</a>) : <b>{r.title}</b>}
+              {r.note && <> – <span dangerouslySetInnerHTML={{ __html: r.note }} /></>}
+            </li>
+          ))}</ol>
+        </section>
+      ) : null}
     </div>
   );
 }

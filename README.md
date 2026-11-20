@@ -1,6 +1,6 @@
 # IELTS Prep Studio (Next.js)
 
-A complete IELTS preparation platform organised as a book: **The IELTS Book** has 78 chapters in 7 parts (Getting started, Listening, Reading, Writing, Speaking, Grammar & vocabulary, Test yourself).
+A complete IELTS preparation platform organised as a book: **The IELTS Book** has 80 chapters in 7 parts (Getting started, Listening, Reading, Writing, Speaking, Grammar & vocabulary, Test yourself).
 
 Every question-type chapter contains:
 - what the task is and how to read its instructions;
@@ -37,7 +37,7 @@ To host it as a plain static site (GitHub Pages, Netlify, any web host), uncomme
 | Section | Routes |
 |---|---|
 | Book | `/book` contents & reading progress · `/book/how-to-study` · every chapter page shows its chapter number, a *Mark as completed* button and previous/next links |
-| Start | `/` dashboard (streak, exam countdown, next tasks) · `/exam` format & scoring · `/progress` 8-week plan, results, writing history, error log, backup |
+| Start | `/` dashboard (streak, exam countdown, next tasks) · `/exam` the test explained · `/exam/scoring` how IELTS is scored · `/exam/test-day` booking, test day & results · `/progress` 8-week plan, results, writing history, error log, backup |
 | Listening | `/listening` overview · `/listening/fundamentals` · `/listening/[type]` (6 chapters) |
 | Reading | `/reading` overview · `/reading/fundamentals` · `/reading/answer-order` · `/reading/[type]` (11 chapters) |
 | Writing | `/writing` · `/writing/task-1/[type]` (7 visual types) · `/writing/letters/[type]` (3) · `/writing/task-2/[type]` (6) · `/writing/ideas` · `/writing/band-descriptors` |
@@ -118,6 +118,14 @@ To build a mock test, list section ids in `mock-tests.ts`. `npm run validate` ch
 }
 ```
 
-Listening worked examples use `script` (the same format as practice sets) and get an audio player automatically. To add a page to the book, add it to `src/content/book/toc.ts`. `npm run validate` checks that every question type has a complete chapter, that the HTML tags balance, and that every table-of-contents link is a real page.
+Optional fields:
+
+- `exercises: { id: 'ch-…', title, intro?, groups }` – auto-marked practice using the same question groups as practice sets; every question needs an explanation `x`.
+- `references: [{ title, url?, note? }]` – sources for factual claims and further reading.
+- `verified: 'YYYY-MM-DD'` – the date the exam facts were checked against official sources.
+
+In chapter HTML, use `<div class="callout official">` for official IELTS rules and `<div class="callout advice">` for preparation advice, so that learners can always tell them apart.
+
+Listening worked examples use `script` (the same format as practice sets) and get an audio player automatically. To add a page to the book, add it to `src/content/book/toc.ts`. `npm run validate` checks that every question type has a complete chapter, that the HTML tags balance, that every table-of-contents and in-chapter link is a real page, and that chapter exercises are marked and explained. The full curriculum, its status and the build order are in [`docs/CURRICULUM.md`](docs/CURRICULUM.md).
 
 Run `npm run validate` and `npm run build` after editing content.

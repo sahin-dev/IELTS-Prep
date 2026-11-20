@@ -20,6 +20,8 @@
   --bad-soft: #fee2e2;
   --warn: #b45309;
   --warn-soft: #fef3c7;
+  --official: #0f766e;
+  --official-soft: #d5f5ef;
   --shadow: 0 1px 2px rgba(16,24,40,.05), 0 2px 8px rgba(16,24,40,.05);
   --radius: 12px;
   --sidebar-w: 260px;
@@ -49,6 +51,8 @@
   --bad-soft: #3a1717;
   --warn: #fbbf24;
   --warn-soft: #3a2e10;
+  --official: #2dd4bf;
+  --official-soft: #0f2e2b;
   --shadow: 0 1px 2px rgba(0,0,0,.3);
   color-scheme: dark;
 }
@@ -151,6 +155,16 @@ main { flex: 1; min-width: 0; padding: 28px 36px 80px; max-width: 1180px; outlin
 .callout.warn { border-color: var(--warn); background: var(--warn-soft); }
 .callout.bad { border-color: var(--bad); background: var(--bad-soft); }
 .callout strong:first-child { display: block; margin-bottom: 2px; }
+/* The book separates what IELTS officially requires from what we recommend */
+.callout.official { border-color: var(--official); background: var(--official-soft); }
+.callout.advice { border-color: var(--primary); background: var(--primary-soft); }
+.callout.official::before, .callout.advice::before { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; margin-bottom: 3px; }
+.callout.official::before { content: "Official IELTS rule"; color: var(--official); }
+.callout.advice::before { content: "Preparation advice"; color: var(--primary); }
+.chapter-toc .verified { margin: 10px 0 0; font-size: .82rem; color: var(--muted); }
+.sources { margin-top: 24px; font-size: .92rem; }
+.sources h2 { border-bottom: 2px solid var(--border); padding-bottom: 6px; }
+.sources li { margin: 6px 0; }
 
 .steps { counter-reset: step; list-style: none; padding: 0; }
 .steps li { counter-increment: step; position: relative; padding: 8px 0 8px 46px; margin: 0; }

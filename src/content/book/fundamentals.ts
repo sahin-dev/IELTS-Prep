@@ -8,7 +8,7 @@ export const studyMethod: Chapter = {
 <p>This book is organised to make that possible. Each skill begins with a <b>fundamentals</b> chapter (how the paper works and the core skills), followed by a chapter for <b>every question type</b> (or, in Writing and Speaking, every task type). Each chapter gives you a method in order – <i>do this first, then this</i> – a worked example with a full think-aloud solution, lists of what to do and not to do, and the traps to watch for.</p>
 <p>This first chapter explains how to use the book: how to find your starting level, set a realistic target, plan your weeks, and use the <b>study loop</b> – learn, practise, review – that turns practice into progress.</p>`,
   facts: [
-    ['Recommended course length', '8–12 weeks for a one-band improvement'],
+    ['Time to improve', 'Varies widely – plan in months, not weeks, per band'],
     ['Daily study', '60–90 minutes, 5–6 days a week'],
     ['First step', 'A timed diagnostic in all four skills'],
     ['Key habit', 'An error log reviewed every week'],
@@ -16,7 +16,7 @@ export const studyMethod: Chapter = {
     ['Final 2 weeks', 'Full timed tests under exam conditions']
   ],
   method: [
-    { title: 'Know the test and your target', body: '<p>Read <a href="/exam">The IELTS test explained</a>. Find out exactly which band your university, employer or visa requires – overall <b>and</b> for each skill. Many institutions require, for example, 6.5 overall with no skill below 6.0. Write your targets down.</p>' },
+    { title: 'Know the test and your target', body: '<p>Read <a href="/exam">The IELTS test explained</a> and <a href="/exam/scoring">How IELTS is scored</a>. Find out exactly which band your university, employer or visa requires – overall <b>and</b> for each skill. Many institutions require, for example, 6.5 overall with no skill below 6.0. Then set your own target with a safety margin (see <i>Setting a realistic target</i> below) and write it down.</p>' },
     { title: 'Take a diagnostic test under real conditions', body: '<p>Do one Listening and one Reading <a href="/mock-tests">mock test</a> with the timer, write one Task 1 and one Task 2 response in the <a href="/practice/writing">writing practice</a> (60 minutes), and record yourself answering Speaking questions in the <a href="/practice/speaking">simulator</a>. Convert your scores with the <a href="/calculator">band calculator</a>. This shows your weakest skill and the size of the gap.</p>' },
     { title: 'Plan your weeks, weakest skill first', body: '<p>Use the <a href="/progress">8-week plan</a> as a base. Give your weakest skill about 40% of your time, but keep practising the other three every week – skills you don\'t practise get slower.</p>' },
     { title: 'For each question type: read the chapter, then practise', body: '<p>Read the chapter fully once, including the worked example (try it first, then open the solution). Then do the practice set for that type <b>untimed</b> the first time, focusing on following the method step by step.</p>' },
@@ -35,6 +35,27 @@ export const studyMethod: Chapter = {
 <div class="card"><h4>3. Review</h4><p>Analyse every mistake. Write the cause and the rule in your error log. Return to the chapter's "Be careful" section.</p></div>
 </div>
 <p>The review step is where most of your progress happens. A test with 10 mistakes that you review carefully is worth more than three tests done without review.</p>`
+    },
+    {
+      id: 'realistic-target', title: 'Setting a realistic target',
+      html: `<p>A good target is built from three numbers: the score you <b>need</b>, the score you have <b>now</b>, and the <b>time</b> you have. Most candidates know the first, guess the second and ignore the third. Work through all three.</p>
+<h4>1. The requirement is your floor, not your target</h4>
+<p>Copy the requirement exactly, including every per-skill minimum (see <a href="/exam/scoring">How IELTS is scored</a>). Then add a safety margin. Any single test is a sample of your ability: on a different day, with different topics and a different recording, the same person can score half a band higher or lower in a skill without any change in their English. If you aim for exactly the minimum, you have roughly even odds of falling just short.</p>
+<div class="callout advice"><strong>Aim above the minimum</strong>Where you can, aim half a band above each per-skill minimum, especially in the skill you find least predictable (for many candidates, Writing). If your requirement is "7.0 in each skill", prepare to score 7.5 in practice.</div>
+<h4>2. Your current level comes from a timed diagnostic, not from a feeling</h4>
+<p>Take a full timed test in each skill (step 2 of the method above). Convert Listening and Reading with the <a href="/calculator">band calculator</a>; assess Writing and Speaking criterion by criterion, as strictly as you can. Write down five numbers: the four skills and the overall band. The gap between these and your target – skill by skill – is what your plan must close.</p>
+<h4>3. Time: count hours, not weeks</h4>
+<p>"Eight weeks" means very different things for someone studying one hour a week and someone studying two hours a day. Multiply weeks by realistic hours per week, and be honest about work, family and fatigue. Then compare the gap with the time:</p>
+<div class="table-wrap"><table class="data-table">
+<tr><th>Gap to target (per skill)</th><th>Rough guide from teaching experience</th></tr>
+<tr><td>Half a band, mostly technique errors (word limits, NOT GIVEN, timing, no overview)</td><td>Often realistic in a few weeks of focused practice</td></tr>
+<tr><td>Half a band that depends on language (grammar accuracy, vocabulary range, fluency)</td><td>Usually needs two to three months or more of regular study</td></tr>
+<tr><td>A full band or more</td><td>Plan for several months; consider moving your test date or taking a general English course first</td></tr>
+</table></div>
+<p class="muted small">These are not IELTS figures – IELTS publishes no "time per band". They describe what is typical, and individual progress varies widely.</p>
+<h4>4. Check the cheapest route</h4>
+<p>If only the overall band matters, look for the half bands that are cheapest for you – often in Listening or Reading, where a few more correct answers can be enough. If per-skill minimums apply, fix those first. The scoring chapter has a full worked example.</p>
+<div class="callout"><strong>Example</strong>Requirement: 6.5 overall, no skill below 6.0. Diagnostic: L 6.5, R 6.0, W 5.5, S 6.0 (overall 6.0). Time: 10 weeks × 8 hours = 80 hours. Writing must rise half a band (compulsory), and one more half band is needed elsewhere for the overall 6.5. Target profile: L 6.5, R 6.5, W 6.0, S 6.0 – with practice aims of W 6.5 and R 7.0 for a safety margin. Realistic? Ambitious but possible, because the Reading gain is mostly technique. If the gap had been a full band in Writing, the honest answer would be to move the test date.</div>`
     },
     {
       id: 'targets', title: 'What a one-band improvement requires',
@@ -67,11 +88,11 @@ export const studyMethod: Chapter = {
     { title: 'Practising at the wrong level', body: '<p>If you get fewer than half the answers right, slow down: do sets untimed, read every solution, and study the vocabulary. Speed will come later.</p>' }
   ],
   faq: [
-    { q: 'How long does it take to improve by one band?', a: '<p>For most learners, around 8–12 weeks of regular, focused study for one band at the 5–7 level. Moving from 7 to 8 usually takes longer because it requires greater precision.</p>' },
+    { q: 'How long does it take to improve by one band?', a: '<p>There is no official figure, and anyone who promises a band in a fixed number of weeks is guessing. Progress depends on your starting level, how many focused hours you study, how much English you use outside study, and which skill you are improving. As a rough guide from teaching experience: half a band in two to three months of steady study is a realistic aim for many learners in the 5–7 range, a full band usually takes longer, and progress above 7 is slower because it depends on precision. Listening and Reading often move faster than Writing and Speaking, because technique fixes some errors quickly. Measure regularly and let your own results tell you how fast you are moving.</p>' },
     { q: 'Should I take the Academic or General Training test?', a: '<p>It depends on your purpose: universities usually require Academic; migration and many work purposes require General Training. Listening and Speaking are the same in both; Reading and Writing Task 1 differ. Check with the organisation that will receive your results.</p>' }
   ],
   checklist: [
-    'I know my target band overall and for each skill.',
+    'I know my requirement and have set a target with a safety margin, overall and for each skill.',
     'I have taken a diagnostic test in all four skills.',
     'I have a weekly plan with my weakest skill first.',
     'I have started an error log.'
@@ -111,7 +132,7 @@ export const readingFundamentals: Chapter = {
     { title: 'Choose the order of tasks', body: '<p>A sensible default: <b>matching headings first</b> (it builds on your skim), then tasks that <b>follow passage order</b> (TFNG, YNNG, completion, short answers, most MCQ), and finally tasks that <b>need the whole passage</b> (matching information, matching features, global MCQ). See <a href="/reading/answer-order">What to answer first</a>.</p>' },
     { title: 'For each task: read instructions and the word limit', body: '<p>Circle the word limit, the answer format (TRUE/FALSE or YES/NO; letters or words) and the question range.</p>' },
     { title: 'Answer question by question: locate → read in detail → decide', body: '<p>Use the question\'s locators to scan. When you find the place, read the surrounding sentences carefully and decide. Then continue from that point for the next question (for ordered tasks).</p>' },
-    { title: 'Write answers on the answer sheet as you go', body: '<p>On paper, write each answer directly on the answer sheet (or transfer after each passage). There is no transfer time at the end. On computer, type answers as you go.</p>' },
+    { title: 'Enter answers as you go', body: '<p>On computer – the way almost every IELTS test is taken since mid-2026 – type or click each answer as soon as you decide it. There is no transfer time at the end: the 60 minutes include answering. (In the remaining paper-based tests, write each answer straight onto the answer sheet, or transfer after each passage.)</p>' },
     { title: 'Respect your time limit for each passage', body: '<p>When your time for a passage is up, guess any remaining answers and move on. A guessed answer has a chance; a blank has none.</p>' },
     { title: 'Final minute: fill every blank', body: '<p>Check that every answer box has something in it. There is no penalty for wrong answers.</p>' }
   ],
@@ -209,10 +230,10 @@ export const readingFundamentals: Chapter = {
 export const listeningFundamentals: Chapter = {
   intro: `
 <p>The Listening test has <b>four parts</b> with <b>ten questions each</b> – 40 questions in about 30 minutes. Each recording is played <b>once only</b>. The parts become progressively more difficult, and the questions in each part follow the order of the recording. You hear a range of English accents, including British, Australian, New Zealand and North American.</p>
-<p>In the <b>paper-based</b> test, you write answers on the question paper while listening and then have <b>10 minutes</b> at the end to transfer them to the answer sheet. In the <b>computer-delivered</b> test, you type answers as you listen and get <b>2 minutes</b> at the end to check them.</p>
+<p>On <b>computer</b> – the way almost every IELTS test is taken since IELTS began withdrawing the paper test in mid-2026 – you type answers as you listen, and candidates report a short time at the end (about <b>2 minutes</b>) to check them. In the <b>paper-based</b> test you wrote on the question paper while listening and then had <b>10 minutes</b> to transfer your answers to an answer sheet.</p>
 <p>The Listening test rewards preparation more than any other part of IELTS. Most marks are lost not because candidates cannot understand English, but because they are <b>reading the wrong question</b> when the answer comes, fall for a <b>distractor</b>, or make a <b>spelling or word-limit mistake</b>. All three can be fixed with technique. This chapter explains how each part works and the skills that apply to every question type: <b>prediction</b>, following <b>signposts</b>, handling <b>distractors</b>, and writing answers correctly.</p>`,
   facts: [
-    ['Time', 'About 30 minutes + 10 min transfer (paper) or 2 min check (computer)'],
+    ['Time', 'About 30 minutes, plus a short check at the end on computer'],
     ['Questions', '40, ten per part, one mark each'],
     ['Played', 'Once only'],
     ['Order', 'Questions follow the recording'],
@@ -284,7 +305,7 @@ export const listeningFundamentals: Chapter = {
 <li>Word limits are strict: "ONE WORD ONLY" means one word; numbers in figures don't count as words in "WORD(S) AND/OR A NUMBER".</li>
 <li>Currency symbols and units are already printed on the paper if they are not needed; if "£" is outside the gap, write only the number.</li>
 <li>Don't write the words that are already in the question.</li>
-<li>Paper test: you have 10 minutes to transfer. Write clearly; an unclear letter is wrong.</li>
+<li>On computer, check the spelling of every typed answer – a typing slip is marked as a spelling mistake. (On the remaining paper tests there were 10 minutes to transfer; an unclear letter was marked wrong.)</li>
 </ul>`
     }
   ],
@@ -342,7 +363,7 @@ export const listeningFundamentals: Chapter = {
   timing: '<p>About 30 seconds of preparation time are given before each section. Read the questions in this order: instructions (word limit) → headings → each question. Spend roughly 3 seconds per question underlining and predicting.</p>',
   faq: [
     { q: 'Do I lose marks for wrong spelling?', a: '<p>Yes – a misspelt answer is marked wrong. This is why spelling practice is essential.</p>' },
-    { q: 'Can I write in pencil?', a: '<p>In the paper-based test you must use a pencil for the answer sheet.</p>' },
+    { q: 'Do I write or type my answers?', a: '<p>On computer you type or click them during the recording. Only the paper-based test, withdrawn in most countries since mid-2026, used an answer sheet and pencil.</p>' },
     { q: 'Are American spellings accepted?', a: '<p>Yes. Both British and American spellings are accepted.</p>' }
   ],
   checklist: ['I know the four parts and their typical tasks.', 'I use preparation time to read ahead and predict.', 'I recognise the five distractor patterns.', 'I can write numbers, dates and spelled names accurately.', 'I know the answer-sheet rules.'],

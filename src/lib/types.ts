@@ -128,9 +128,23 @@ export interface Chapter {
   careful: BookTrap[];
   timing?: string;
   faq?: { q: string; a: string }[];
+  /** Practice with an answer key and an explanation for every answer (marked automatically). */
+  exercises?: ChapterExercises;
   checklist: string[];
   summary: string[];
+  /** Sources for the factual claims in the chapter, and further reading. */
+  references?: Reference[];
+  /** Date (YYYY-MM-DD) the exam facts in this chapter were last checked against official sources. */
+  verified?: string;
 }
+export interface ChapterExercises {
+  /** Unique id used to save results to progress (prefix "ch-"). */
+  id: string;
+  title: string;
+  intro?: string;
+  groups: QuestionGroup[];
+}
+export interface Reference { title: string; url?: string; note?: string }
 
 export interface MockTest {
   id: string;

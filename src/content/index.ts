@@ -8,7 +8,6 @@ import { vocabWritingBanks } from './vocabulary-writing';
 import { vocabSkillBanks } from './vocabulary-skills';
 import { vocabExtraBanks } from './vocabulary-extra';
 
-export { overview } from './overview';
 export { reading } from './reading-guide';
 export { listening } from './listening-guide';
 export { writing } from './writing-task1';
