@@ -193,4 +193,6 @@ export interface CueCard { title: string; points: string[]; last: string; part3:
 export type VocabItem = string[]; // [word, meaning, example?]
 export interface VocabGroup { h: string; items: VocabItem[] }
 export interface VocabBank { id: string; section: string; name: string; color: string; intro: string; groups: VocabGroup[] }
-export interface GrammarTopic { id: string; name: string; short: string; html: string; exercises: QuestionGroup[] }
+/** A grammar topic. Older topics carry a quick-reference `html` and their own `exercises`;
+    masterclass topics keep their exercises inside the book chapter (`Chapter.exercises`). */
+export interface GrammarTopic { id: string; name: string; short: string; group?: string; html?: string; exercises?: QuestionGroup[] }

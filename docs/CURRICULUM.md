@@ -31,7 +31,7 @@ Legend: ✅ complete to the standard above · 🟡 exists but below the standard
 | Spec part | Status | What exists | Main gaps |
 |---|---|---|---|
 | 1. Examination fundamentals | ✅ | `/exam`, `/exam/scoring`, `/exam/test-day` (3 chapters with exercises and sources, verified 2026-11-20); target-setting section in `/book/how-to-study` | Re-verify facts every 6 months (delivery modes, results times, One Skill Retake acceptance) |
-| 2. Grammar masterclass | 🟡 | 12 topics (`/grammar/[topic]`): sentence types, clauses, conditionals, passive, tenses (combined), comparatives, articles, agreement, advanced, punctuation, paraphrasing, common errors | A: parts of speech (10 chapters). B: one chapter per tense (12). C: direct/indirect speech, sentence transformation. D: modals, gerunds/infinitives, participles, quantifiers, parallelism, inversion, emphasis, cleft sentences. E: grammar for Writing with sentence-improvement exercises |
+| 2. Grammar masterclass | 🟡 | Grouped A–E on `/grammar` (data: `src/content/grammar-masterclass.ts`). **A. Parts of speech ✅** (2026-11-20): nouns, pronouns, verbs, adjectives, adverbs, prepositions, conjunctions, interjections, determiners (`book/grammar-pos-a/b/c.ts`); articles exists (🟡). **B. Tenses ✅** (2026-11-20): all twelve tenses (`book/grammar-tense-a/b/c.ts`) after the older tenses overview. Older topics: sentence types, clauses, agreement, conditionals, passive, comparatives, advanced, punctuation, common errors, paraphrasing | Articles and tenses overview: add exercises/sources. C: subject and predicate, direct/indirect speech, sentence transformation. D: modals, gerunds/infinitives, participles, phrasal verbs, parallelism, inversion, emphasis, cleft sentences. E: grammar for Writing with sentence-improvement exercises |
 | 3. Vocabulary masterclass | 🟡 | 19 banks with flashcards (spaced repetition) and quizzes; chapters for linking, phrasal verbs, collocations; AWL essentials | Topic chapters for the 26 listed topics (only general Task 2 topic vocabulary exists); full AWL with pronunciation and word families; synonyms/antonyms, connotation, confused words; daily targets and personal collections |
 | 4. Listening masterclass | 🟡 | Fundamentals + 6 question-type chapters; 9 practice sets; dictation drills | Exercises and sources in each chapter; separate chapters for accents, connected speech and weak forms, and the problem-solving strategies list (corrections, numbers and names, long academic talks); multiple-answer MCQ as its own chapter; realistic recordings ⚙️ |
 | 5. Reading masterclass | 🟡 | Fundamentals, answer order, 11 question-type chapters; 17 practice sets | Exercises and sources in each chapter; skills lessons (skimming, scanning, intensive/extensive reading, reference words, argument development); a full time-management chapter; more full-length passages |
@@ -52,8 +52,8 @@ Legend: ✅ complete to the standard above · 🟡 exists but below the standard
 One part (or one coherent group of chapters) per session, each finished to the standard before moving on:
 
 1. ~~Part 1: Examination fundamentals~~ – done 2026-11-20.
-2. **Part 2A: Parts of speech** (nouns, pronouns, verbs, adjectives, adverbs, prepositions, conjunctions, interjections, articles, determiners). This is the foundation the rest of the grammar section builds on.
-3. Part 2B: Tenses, one chapter each (12).
+2. ~~Part 2A: Parts of speech~~ – done 2026-11-20 (articles retrofit pending).
+3. ~~Part 2B: Tenses, one chapter each (12)~~ – done 2026-11-20 (`book/grammar-tense-a/b/c.ts`).
 4. Part 2C–E: Sentence structure, advanced grammar, grammar for Writing.
 5. Retrofit exercises and sources to the existing Reading chapters, then the Listening chapters (high value for the exam, quick to bring up to standard).
 6. Part 6 gaps (letter purposes, essay types, annotated band samples) together with Part 11 (band development).

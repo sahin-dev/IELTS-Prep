@@ -26,6 +26,14 @@ function checkGroups(groups: QuestionGroup[], where: string) {
       if ((g.kind === 'select' || (g.kind === 'gap' && g.options)) && !g.options?.some(o => o.v === q.a)) err(`${where} q${q.n} answer ${q.a} not among options`);
       if (g.kind === 'gap' && !g.text && !g.options && !q.q) err(`${where} q${q.n} gap missing question text`);
       if (g.kind === 'gap' && g.maxWords && !g.options) answerList(q.a).forEach(x => { if (x.trim().split(/\s+/).length > g.maxWords!) err(`${where} q${q.n} accepted answer "${x}" exceeds ${g.maxWords} words`); });
+      // A word limit stated only in the instructions must also hold for every accepted answer
+      if (g.kind === 'gap' && !g.maxWords && !g.options && g.instructions && !/NUMBER/i.test(g.instructions)) {
+        const t = g.instructions.replace(/<[^>]+>/g, '').toUpperCase();
+        const words: Record<string, number> = { ONE: 1, TWO: 2, THREE: 3, FOUR: 4 };
+        const m = t.match(/ONE WORD ONLY/) ? 1 : (t.match(/NO MORE THAN (ONE|TWO|THREE|FOUR) WORDS?/) || [])[1];
+        const limit = typeof m === 'number' ? m : m ? words[m] : 0;
+        if (limit) answerList(q.a).forEach(x => { if (x.trim().split(/\s+/).length > limit) err(`${where} q${q.n} accepted answer "${x}" breaks the instruction limit of ${limit} word(s)`); });
+      }
     });
     if (g.text) {
       const ph = [...g.text.matchAll(/\[\[(\d+)\]\]/g)].map(m => +m[1]).sort((a, b) => a - b).join();
@@ -45,7 +53,7 @@ allSets.forEach(s => {
   checkGroups(s.groups, s.id);
 });
 [...reading.types, ...listening.types].forEach(t => { if (t.practice && !ids.has(t.practice)) err(`guide ${t.id} links to missing practice ${t.practice}`); });
-grammar.forEach(g => checkGroups(g.exercises, 'grammar ' + g.id));
+grammar.forEach(g => checkGroups(g.exercises || [], 'grammar ' + g.id));
 checkGroups(pronunciation.exercises, 'pronunciation');
 
 // Mock tests must have exactly 40 marks
@@ -103,6 +111,7 @@ book.bookChapters.forEach(c => {
   if (!routeOk(c.href)) err('book TOC link broken: ' + c.href);
 });
 const exerciseIds = new Set<string>();
+let chapterQuestions = 0;
 function checkChapter(ch: Chapter | undefined, where: string) {
   if (!ch) return err('missing chapter: ' + where);
   if (ch.exercises) {
@@ -111,6 +120,7 @@ function checkChapter(ch: Chapter | undefined, where: string) {
     if (exerciseIds.has(id) || ids.has(id)) err(`${where}: duplicate exercise id ${id}`);
     exerciseIds.add(id);
     checkGroups(ch.exercises.groups, where + ' exercises');
+    chapterQuestions += totalMarks(ch.exercises.groups);
     ch.exercises.groups.forEach((g, gi) => g.questions.forEach(q => { if (g.kind !== 'open' && !q.x) err(`${where} exercises group ${gi} q${q.n}: every exercise needs an explanation`); }));
   }
   ch.references?.forEach(r => {
@@ -140,7 +150,7 @@ grammar.forEach(g => checkChapter(book.grammarChapters[g.id], 'grammar/' + g.id)
 Object.entries(book.vocabChapters).forEach(([id, ch]) => { if (!vids.has(id)) err('vocab chapter for unknown bank ' + id); checkChapter(ch, 'vocabulary/' + id); });
 ([['exam format', book.examFormat], ['exam scoring', book.examScoring], ['exam test day', book.examDay], ['study method', book.studyMethod], ['reading fundamentals', book.readingFundamentals], ['listening fundamentals', book.listeningFundamentals], ['task 1 method', book.task1Method], ['letters method', book.lettersMethod], ['task 2 method', book.task2Method], ['speaking fundamentals', book.speakingFundamentals]] as [string, Chapter][]).forEach(([n, ch]) => checkChapter(ch, n));
 
-const questions = allSets.reduce((a, s) => a + totalMarks(s.groups), 0) + grammar.reduce((a, g) => a + totalMarks(g.exercises), 0) + totalMarks(pronunciation.exercises);
+const questions = allSets.reduce((a, s) => a + totalMarks(s.groups), 0) + grammar.reduce((a, g) => a + totalMarks(g.exercises || []), 0) + chapterQuestions + totalMarks(pronunciation.exercises);
 console.log(`Sets: ${allSets.length} (${allSets.filter(s => s.id.startsWith('r-')).length} reading, ${allSets.filter(s => s.id.startsWith('l-')).length} listening) · mock tests: ${mockTests.length} · writing prompts: ${writingTasks.length}`);
 console.log(`Auto-marked questions: ${questions} · vocabulary entries: ${entries} in ${vocabBanks.length} banks · grammar topics: ${grammar.length}`);
 console.log(`Book: ${book.bookChapters.length} chapters in ${book.bookParts.length} parts`);

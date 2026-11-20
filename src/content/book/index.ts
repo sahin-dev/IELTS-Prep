@@ -16,6 +16,16 @@ export { examDay } from './exam-c';
 export { task1Chapters, task1Method } from './writing-t1';
 export { letterChapters, lettersMethod, task2Chapters, task2Method } from './writing-t2';
 export { speakingChapters, speakingFundamentals } from './speaking';
-export { grammarChapters } from './grammar';
+import { grammarChapters as grammarBase } from './grammar';
+import { grammarChaptersPosA } from './grammar-pos-a';
+import { grammarChaptersPosB } from './grammar-pos-b';
+import { grammarChaptersPosC } from './grammar-pos-c';
+import { tenseChaptersA } from './grammar-tense-a';
+import { tenseChaptersB } from './grammar-tense-b';
+import { tenseChaptersC } from './grammar-tense-c';
+export const grammarChapters: Record<string, Chapter> = {
+  ...grammarBase, ...grammarChaptersPosA, ...grammarChaptersPosB, ...grammarChaptersPosC,
+  ...tenseChaptersA, ...tenseChaptersB, ...tenseChaptersC
+};
 export { vocabChapters } from './language';
 export { bookChapters, bookParts, chapterFor } from './toc';

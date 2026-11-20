@@ -15,7 +15,7 @@ export { writingTask2 } from './writing-task2';
 export { bandDescriptors, ideaBank, task1Mistakes } from './writing-extra';
 export { speaking } from './speaking';
 export { pronunciation } from './pronunciation';
-export { grammar } from './grammar';
+export { grammarTopics as grammar, GRAMMAR_GROUPS } from './grammar-masterclass';
 export { resources } from './resources';
 export { studyPlan } from './study-plan';
 export { mockTests } from './mock-tests';

@@ -21,20 +21,17 @@ export default async function Page({ params }: Params) {
   const g = grammar.find(x => x.id === topic);
   if (!g) notFound();
   const ch = grammarChapters[g.id];
-  const reference = <div className="card"><Html html={g.html} /></div>;
-  const exercises = <TestRunner set={{ id: 'g-' + g.id, type: 'grammar', title: 'Grammar: ' + g.name, groups: g.exercises }} skill="grammar" embedded />;
+  const reference = g.html ? <div className="card"><Html html={g.html} /></div> : null;
+  const exercises = g.exercises?.length ? <TestRunner set={{ id: 'g-' + g.id, type: 'grammar', title: 'Grammar: ' + g.name, groups: g.exercises }} skill="grammar" embedded /> : null;
+  const extras = [
+    ...(reference ? [{ id: 'reference', title: 'Quick reference: rules and examples', node: reference, after: 'sections' as const }] : []),
+    ...(exercises ? [{ id: 'topic-exercises', title: ch?.exercises ? 'More exercises (marked automatically)' : 'Exercises (marked automatically)', node: exercises, after: 'end' as const }] : [])
+  ];
   return (
     <>
       <PageHeader crumbs={[['Grammar', '/grammar'], [g.name]]} title={g.name} lead={g.short} />
       <SubNav items={SECTION_NAV.language} />
-      {ch ? (
-        <ChapterView ch={ch} accent="grammar" extras={[
-          { id: 'reference', title: 'Quick reference: rules and examples', node: reference, after: 'sections' },
-          { id: 'exercises', title: 'Exercises (marked automatically)', node: exercises, after: 'end' }
-        ]} />
-      ) : (
-        <>{reference}<h2>Exercises</h2>{exercises}</>
-      )}
+      {ch ? <ChapterView ch={ch} accent="grammar" extras={extras} /> : <>{reference}{exercises && <><h2>Exercises</h2>{exercises}</>}</>}
     </>
   );
 }
