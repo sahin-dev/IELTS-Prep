@@ -1,8 +1,18 @@
 # IELTS Prep Studio (Next.js)
 
-A complete IELTS preparation platform. It covers every question type with strategies, original practice sets and full mock tests, vocabulary with spaced-repetition flashcards, grammar and sentence building, writing practice with automatic analysis, a speaking simulator and a pronunciation guide.
+A complete IELTS preparation platform organised as a book: **The IELTS Book** has 78 chapters in 7 parts (Getting started, Listening, Reading, Writing, Speaking, Grammar & vocabulary, Test yourself).
 
-Built with **Next.js 16 (App Router) + React 19 + TypeScript**. All 227 pages are statically generated.
+Every question-type chapter contains:
+- what the task is and how to read its instructions;
+- what it really tests;
+- the method step by step, in order;
+- worked examples with a full think-aloud solution;
+- do's and don'ts, traps explained with examples;
+- timing, FAQs, a final checklist and key takeaways.
+
+Around the book are original practice sets, full mock tests, spaced-repetition flashcards, writing practice with automatic analysis, a speaking simulator and a pronunciation guide.
+
+Built with **Next.js 16 (App Router) + React 19 + TypeScript**. All 231 pages are statically generated.
 
 ## Getting started
 
@@ -26,9 +36,10 @@ To host it as a plain static site (GitHub Pages, Netlify, any web host), uncomme
 
 | Section | Routes |
 |---|---|
+| Book | `/book` contents & reading progress · `/book/how-to-study` · every chapter page shows its chapter number, a *Mark as completed* button and previous/next links |
 | Start | `/` dashboard (streak, exam countdown, next tasks) · `/exam` format & scoring · `/progress` 8-week plan, results, writing history, error log, backup |
-| Listening | `/listening` overview + 6 question types · `/listening/[type]` |
-| Reading | `/reading` overview + 11 question types · `/reading/answer-order` strategy map · `/reading/[type]` |
+| Listening | `/listening` overview · `/listening/fundamentals` · `/listening/[type]` (6 chapters) |
+| Reading | `/reading` overview · `/reading/fundamentals` · `/reading/answer-order` · `/reading/[type]` (11 chapters) |
 | Writing | `/writing` · `/writing/task-1/[type]` (7 visual types) · `/writing/letters/[type]` (3) · `/writing/task-2/[type]` (6) · `/writing/ideas` · `/writing/band-descriptors` |
 | Speaking | `/speaking` · `/speaking/part-1…3` · `/speaking/topics` · `/speaking/cue-cards` · `/speaking/phrases` · `/speaking/pronunciation` |
 | Language | `/vocabulary` + `/vocabulary/[bank]` (19 banks: list, flashcards, quiz) · `/grammar` + `/grammar/[topic]` (12 topics) |
@@ -42,6 +53,8 @@ To host it as a plain static site (GitHub Pages, Netlify, any web host), uncomme
 src/
   app/                 routes (one folder per URL; dynamic routes use generateStaticParams)
   components/          React components
+    ChapterView.tsx      renders a book chapter (contents, method, worked examples, do/don't, traps...)
+    BookNav.tsx          chapter label, mark-as-completed, previous/next, contents progress
     TestRunner.tsx       renders & marks every question type (choice, multi, select, gap, templates)
     MockTestRunner.tsx   multi-section timed tests numbered 1–40
     ListeningPlayer.tsx  text-to-speech audio with two voices and exam mode
@@ -49,6 +62,7 @@ src/
     SpeakingSimulator.tsx, VocabBankView.tsx, DictationDrills.tsx, Dashboard.tsx, ProgressView.tsx ...
   content/             ALL learning content as typed data (edit these to add material)
     index.ts             single entry point (aggregates and orders sets and banks)
+    book/                the in-depth chapters (toc.ts = table of contents; one file per skill)
   lib/                 types, scoring & bands, storage, spaced repetition, TTS, charts, analyser, search
 scripts/validate-content.ts   content checks (npm run validate)
 legacy-static/        the original no-build HTML version (kept for reference; safe to delete)
@@ -88,5 +102,22 @@ Listening sets add a `script`:
 - pauses: `{ pause: 20, t: 'Reading time' }`
 
 To build a mock test, list section ids in `mock-tests.ts`. `npm run validate` checks that the sections add up to exactly 40 marks.
+
+**A book chapter** (`src/content/book/*.ts`, type `Chapter` in `src/lib/types.ts`) is keyed by the id of the page it belongs to (e.g. `readingChapters.tfng` → `/reading/tfng`):
+
+```ts
+{
+  intro: '<p>What the task is...</p>',
+  facts: [['Appears in', '...'], ['Order', '...']],
+  anatomy: '<p>The instructions dissected...</p>',
+  method: [{ title: 'Step title', body: '<p>...</p>', example: 'optional' }],
+  worked: [{ title: '...', source: '<p>passage</p>', questions: '<ol>...</ol>',
+             walk: [{ q: '1. ...', a: 'TRUE', steps: ['Locate...', 'Compare...', 'Decide...'] }] }],
+  dos: ['...'], donts: ['...'], careful: [{ title: '...', body: '...', example: '...' }],
+  checklist: ['...'], summary: ['...']
+}
+```
+
+Listening worked examples use `script` (the same format as practice sets) and get an audio player automatically. To add a page to the book, add it to `src/content/book/toc.ts`. `npm run validate` checks that every question type has a complete chapter, that the HTML tags balance, and that every table-of-contents link is a real page.
 
 Run `npm run validate` and `npm run build` after editing content.

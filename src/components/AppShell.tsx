@@ -4,9 +4,10 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Store } from '@/lib/storage';
 import { speak } from '@/lib/tts';
+import { BookLabel, BookPager } from './BookNav';
 
 export const NAV: { title: string; items: [string, string, string][] }[] = [
-  { title: 'Start here', items: [['/', 'Dashboard', 'primary'], ['/exam', 'Exam format & scoring', 'primary'], ['/progress', 'Study plan & progress', 'primary']] },
+  { title: 'Start here', items: [['/', 'Dashboard', 'primary'], ['/book', 'The IELTS Book (contents)', 'primary'], ['/exam', 'Exam format & scoring', 'primary'], ['/progress', 'Study plan & progress', 'primary']] },
   { title: 'Skills', items: [['/listening', 'Listening', 'listening'], ['/reading', 'Reading', 'reading'], ['/writing', 'Writing', 'writing'], ['/speaking', 'Speaking', 'speaking']] },
   { title: 'Language toolkit', items: [['/vocabulary', 'Vocabulary bank', 'vocab'], ['/grammar', 'Grammar & sentences', 'grammar'], ['/speaking/pronunciation', 'Pronunciation', 'speaking'], ['/writing/ideas', 'Task 2 idea bank', 'writing']] },
   { title: 'Practice & tests', items: [['/practice', 'Practice hub', 'primary'], ['/mock-tests', 'Mock tests', 'primary'], ['/practice/listening', 'Listening practice', 'listening'], ['/practice/reading', 'Reading practice', 'reading'], ['/practice/writing', 'Writing practice', 'writing'], ['/practice/speaking', 'Speaking simulator', 'speaking'], ['/practice/drills', 'Dictation drills', 'listening'], ['/practice/vocabulary', 'Vocabulary quiz', 'vocab']] },
@@ -64,7 +65,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
         </nav>
         {open && <div className="backdrop" onClick={() => setOpen(false)} />}
         <main id="main" tabIndex={-1}>
+          <BookLabel />
           {children}
+          <BookPager />
           <footer className="site">
             IELTS Prep Studio – all practice passages, recordings and questions are original. IELTS is a registered trademark of the British Council, IDP IELTS and Cambridge University Press &amp; Assessment. This is an independent study tool, not affiliated with or endorsed by them. Your progress is stored only in this browser (export it from <Link href="/progress">Progress</Link>).
           </footer>

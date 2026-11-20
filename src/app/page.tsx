@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Dashboard from '@/components/Dashboard';
 import { Tile } from '@/components/ui';
+import { bookChapters } from '@/content/book/toc';
 import { grammar, listening, listeningSets, mockTests, reading, readingSets, speaking, studyPlan, vocabBanks, writing, writingTask2 } from '@/content';
 import { writingTasks } from '@/lib/writing-tasks';
 
@@ -25,9 +26,9 @@ export default function Home() {
     <>
       <div className="hero">
         <h1>Prepare for IELTS, step by step</h1>
-        <p>Learn every question type and how to approach it, practise with original tests and full mock tests, and build the vocabulary, grammar and speaking skills you need for Band 7+.</p>
+        <p>A complete course in book form: a full chapter for every question type, with a step-by-step method, worked examples, what to do and what to avoid, then original practice sets and full mock tests.</p>
         <div className="btn-row">
-          <Link className="btn" href="/exam">Start with the exam format</Link>
+          <Link className="btn" href="/book">Open the IELTS Book ({bookChapters.length} chapters)</Link>
           <Link className="btn ghost" href="/practice">Go to practice</Link>
           <Link className="btn ghost" href="/mock-tests">Take a mock test</Link>
         </div>
@@ -37,8 +38,8 @@ export default function Home() {
 
       <h2>How to use this platform</h2>
       <div className="grid">
-        <Tile href="/exam" title="1. Understand the exam">Format, timing, scoring and band descriptors.</Tile>
-        <Tile href="/listening" accent="listening" title="2. Learn each skill">Every question type: what it tests, how to approach it, common traps.</Tile>
+        <Tile href="/book/how-to-study" title="1. Read Chapter 1">How to prepare: diagnose, plan, and the learn → practise → review loop.</Tile>
+        <Tile href="/book" accent="listening" title="2. Work through the book">A chapter for every question type: method in order, worked examples, do&apos;s and don&apos;ts, traps.</Tile>
         <Tile href="/vocabulary" accent="vocab" title="3. Build your language">Vocabulary with flashcards, grammar, sentence building, pronunciation.</Tile>
         <Tile href="/practice" accent="writing" title="4. Practise by question type">Targeted sets with explanations, writing feedback, speaking simulator.</Tile>
         <Tile href="/mock-tests" accent="speaking" title="5. Test yourself">Full 40-question mock tests, then official practice tests.</Tile>

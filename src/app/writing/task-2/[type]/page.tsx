@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Html, List, ModelAnswer, PageHeader, Structure } from '@/components/ui';
 import { SubNav } from '@/components/client-ui';
+import { ChapterView } from '@/components/ChapterView';
 import { SECTION_NAV } from '@/lib/nav';
 import { writingTask2 } from '@/content';
+import { task2Chapters } from '@/content/book';
 
 type Params = { params: Promise<{ type: string }> };
 export const dynamicParams = false;
@@ -16,29 +18,36 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function Page({ params }: Params) {
   const { type } = await params;
-  const idx = writingTask2.types.findIndex(x => x.id === type), t = writingTask2.types[idx];
-  if (!t) notFound();
-  const next = writingTask2.types[idx + 1];
+  const t = writingTask2.types.find(x => x.id === type);
+  const ch = task2Chapters[type];
+  if (!t || !ch) notFound();
+  const plan = (
+    <div className="grid-2">
+      <div className="card"><h3 className="mt0">How to recognise it</h3><List items={t.recognise.map(r => `<i>"${r}"</i>`)} /><h3>Paragraph plan</h3><Structure items={t.structure} /></div>
+      <div className="card"><h3 className="mt0">Template (adapt, don&apos;t copy)</h3><Html html={t.template} />
+        <p><Link href="/vocabulary/t2-phrases">Essay phrases</Link> · <Link href="/vocabulary/linking">Linking words</Link> · <Link href="/writing/ideas">Idea bank</Link></p></div>
+    </div>
+  );
+  const model = (
+    <>
+      <ModelAnswer html={t.sample.answer} title="Model essay (Band 8–9)" />
+      <div className="btn-row"><Link className="btn" href={`/practice/writing/w2-${t.id}-s`}>Write this essay yourself (timed)</Link></div>
+    </>
+  );
+  const practice = (
+    <div className="card">
+      {t.prompts.map((p, i) => <div className="q q-row" key={i}><span className="q-row-text">{p}</span><Link className="btn small" href={`/practice/writing/w2-${t.id}-${i}`}>Write</Link></div>)}
+    </div>
+  );
   return (
     <>
       <PageHeader crumbs={[['Writing', '/writing'], ['Task 2', '/writing/task-2'], [t.name]]} title={`Task 2: ${t.name}`} />
       <SubNav items={SECTION_NAV.writing} />
-      <div className="grid-2">
-        <div className="card"><h3 className="mt0">How to recognise it</h3><List items={t.recognise.map(r => `<i>"${r}"</i>`)} /><h3>Paragraph plan</h3><Structure items={t.structure} /></div>
-        <div className="card"><h3 className="mt0">Template (adapt, don&apos;t copy)</h3><Html html={t.template} />
-          <p><Link href="/vocabulary/t2-phrases">Essay phrases</Link> · <Link href="/vocabulary/linking">Linking words</Link> · <Link href="/writing/ideas">Idea bank</Link></p></div>
-      </div>
-      <h2>Sample question</h2>
-      <div className="prompt-box"><div className="ptitle">Writing Task 2 · about 40 minutes</div><p>{t.sample.prompt}</p></div>
-      <ModelAnswer html={t.sample.answer} />
-      <div className="btn-row"><Link className="btn" href={`/practice/writing/w2-${t.id}-s`}>Write this essay yourself (timed)</Link></div>
-      <h2>Practice prompts</h2>
-      <div className="card">
-        {t.prompts.map((p, i) => (
-          <div className="q q-row" key={i}><span className="q-row-text">{p}</span><Link className="btn small" href={`/practice/writing/w2-${t.id}-${i}`}>Write</Link></div>
-        ))}
-      </div>
-      {next && <div className="btn-row" style={{ justifyContent: 'flex-end' }}><Link className="btn soft" href={`/writing/task-2/${next.id}`}>{next.name} →</Link></div>}
+      <ChapterView ch={ch} accent="writing" extras={[
+        { id: 'plan', title: 'Recognising the type, paragraph plan and template', node: plan, after: 'method' },
+        { id: 'model', title: 'Model essay', node: model, after: 'worked' },
+        { id: 'practice', title: 'Practice prompts', node: practice, after: 'end' }
+      ]} />
     </>
   );
 }

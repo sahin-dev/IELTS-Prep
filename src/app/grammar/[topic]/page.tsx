@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Html, PageHeader } from '@/components/ui';
 import { SubNav } from '@/components/client-ui';
 import TestRunner from '@/components/TestRunner';
+import { ChapterView } from '@/components/ChapterView';
 import { SECTION_NAV } from '@/lib/nav';
 import { grammar } from '@/content';
+import { grammarChapters } from '@/content/book';
 
 type Params = { params: Promise<{ topic: string }> };
 export const dynamicParams = false;
@@ -17,20 +18,23 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function Page({ params }: Params) {
   const { topic } = await params;
-  const i = grammar.findIndex(g => g.id === topic), g = grammar[i];
+  const g = grammar.find(x => x.id === topic);
   if (!g) notFound();
-  const prev = grammar[i - 1], next = grammar[i + 1];
+  const ch = grammarChapters[g.id];
+  const reference = <div className="card"><Html html={g.html} /></div>;
+  const exercises = <TestRunner set={{ id: 'g-' + g.id, type: 'grammar', title: 'Grammar: ' + g.name, groups: g.exercises }} skill="grammar" embedded />;
   return (
     <>
       <PageHeader crumbs={[['Grammar', '/grammar'], [g.name]]} title={g.name} lead={g.short} />
       <SubNav items={SECTION_NAV.language} />
-      <div className="card"><Html html={g.html} /></div>
-      <h2>Exercises</h2>
-      <TestRunner set={{ id: 'g-' + g.id, type: 'grammar', title: 'Grammar: ' + g.name, groups: g.exercises }} skill="grammar" embedded />
-      <div className="btn-row" style={{ justifyContent: 'space-between' }}>
-        {prev ? <Link className="btn soft" href={`/grammar/${prev.id}`}>← {prev.name}</Link> : <span />}
-        {next && <Link className="btn soft" href={`/grammar/${next.id}`}>{next.name} →</Link>}
-      </div>
+      {ch ? (
+        <ChapterView ch={ch} accent="grammar" extras={[
+          { id: 'reference', title: 'Quick reference: rules and examples', node: reference, after: 'sections' },
+          { id: 'exercises', title: 'Exercises (marked automatically)', node: exercises, after: 'end' }
+        ]} />
+      ) : (
+        <>{reference}<h2>Exercises</h2>{exercises}</>
+      )}
     </>
   );
 }

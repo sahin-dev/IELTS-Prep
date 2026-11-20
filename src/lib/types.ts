@@ -86,6 +86,52 @@ export interface QuestionTypeGuide {
 }
 export interface SkillGuide { intro: string; types: QuestionTypeGuide[] }
 
+/* ---------- Book chapters (in-depth teaching content) ---------- */
+/** One numbered step of a method: what to do, why, and a short illustration. */
+export interface BookStep { title: string; body: string; example?: string }
+/** A trap to be careful about, explained with an example. */
+export interface BookTrap { title: string; body: string; example?: string }
+/** A think-aloud solution for one question of a worked example. */
+export interface WalkStep { q: string; a: string; steps: string[] }
+export interface WorkedExample {
+  title: string;
+  /** Instructions exactly as they would appear in the test (HTML). */
+  instructions?: string;
+  /** Reading passage, prompt or visual (HTML). */
+  source?: string;
+  /** Listening transcript (played with text-to-speech). */
+  script?: ScriptLine[];
+  figure?: ChartSpec;
+  /** The questions as printed (HTML). */
+  questions?: string;
+  walk: WalkStep[];
+  /** Closing lesson drawn from the example. */
+  lesson?: string;
+}
+export interface ChapterSection { id: string; title: string; html: string }
+export interface Chapter {
+  /** Long-form opening: what the task is and why it matters (HTML). */
+  intro: string;
+  /** "At a glance" facts: [label, value]. */
+  facts?: [string, string][];
+  /** The instructions dissected: what each part tells you (HTML). */
+  anatomy?: string;
+  /** What the task really tests and how marks are lost (HTML). */
+  tests?: string;
+  /** The method in order: do this first, then this... */
+  method: BookStep[];
+  /** Additional teaching sections (language tables, annotated answers, band comparisons...). */
+  sections?: ChapterSection[];
+  worked?: WorkedExample[];
+  dos: string[];
+  donts: string[];
+  careful: BookTrap[];
+  timing?: string;
+  faq?: { q: string; a: string }[];
+  checklist: string[];
+  summary: string[];
+}
+
 export interface MockTest {
   id: string;
   skill: 'reading' | 'listening';

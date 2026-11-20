@@ -2,12 +2,16 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { listening, listeningSets, mockTests, reading, readingSets } from '@/content';
+import { listeningChapters, readingChapters } from '@/content/book';
 import { SECTION_NAV } from '@/lib/nav';
 import { Html, List, PageHeader, strip } from './ui';
 import { ProgressBadge, SubNav } from './client-ui';
+import { ChapterView } from './ChapterView';
 
 type RL = 'reading' | 'listening';
-const data = (skill: RL) => (skill === 'reading' ? { guide: reading, sets: readingSets } : { guide: listening, sets: listeningSets });
+const data = (skill: RL) => (skill === 'reading'
+  ? { guide: reading, sets: readingSets, chapters: readingChapters }
+  : { guide: listening, sets: listeningSets, chapters: listeningChapters });
 const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 
 export function SkillOverview({ skill }: { skill: RL }) {
@@ -17,10 +21,10 @@ export function SkillOverview({ skill }: { skill: RL }) {
     <>
       <PageHeader crumbs={[[cap(skill)]]} title={`${cap(skill)}: format, strategies & question types`} />
       <SubNav items={SECTION_NAV[skill]} />
-      {skill === 'reading' && <div className="callout tip"><strong>Not sure which questions to answer first?</strong>Use the <Link href="/reading/answer-order">Reading answer-order guide</Link> to see which tasks follow the passage, which should be left until later, and which require the full text.</div>}
+      <div className="callout tip"><strong>New to IELTS {cap(skill)}?</strong>Start with the <Link href={`/${skill}/fundamentals`}>{cap(skill)} fundamentals chapter</Link>, then read the chapter for each question type below. Each chapter has a step-by-step method, worked examples with full solutions, do&apos;s and don&apos;ts, and the traps to watch for.{skill === 'reading' && <> Not sure which questions to answer first? See <Link href="/reading/answer-order">what to answer first</Link>.</>}</div>
       <div className="card"><Html html={guide.intro} /></div>
       <h2>All {cap(skill)} question types</h2>
-      <p className="muted">Open each type to learn what it tests, what the instructions look like, how to approach it step by step and the common traps. Each one links to targeted practice.</p>
+      <p className="muted">Each type has its own chapter: what it tests, how to read the instructions, the method in order, worked examples, traps and a final checklist. Each one links to targeted practice.</p>
       <div className="grid">
         {guide.types.map((t, i) => (
           <Link key={t.id} className={`tile c-${skill}`} href={`/${skill}/${t.id}`}>
@@ -41,39 +45,41 @@ export function SkillOverview({ skill }: { skill: RL }) {
 }
 
 export function QuestionTypePage({ skill, id }: { skill: RL; id: string }) {
-  const { guide, sets } = data(skill);
-  const idx = guide.types.findIndex(t => t.id === id);
-  const t = guide.types[idx];
+  const { guide, sets, chapters } = data(skill);
+  const t = guide.types.find(x => x.id === id);
   if (!t) notFound();
-  const prev = guide.types[idx - 1], next = guide.types[idx + 1];
+  const ch = chapters[id];
   const practice = sets.filter(p => p.type === t.id || p.id === t.practice);
+  const practiceCard = (
+    <div className="card" style={{ borderLeft: `4px solid var(--${skill})` }}>
+      <p className="mt0">Now apply the method to a full practice set. Afterwards, review every wrong answer: which step of the method did you skip?</p>
+      {practice.length ? practice.map(p => (
+        <div className="btn-row" key={p.id}><Link className="btn" href={`/practice/${skill}/${p.id}`}>{p.title}</Link><ProgressBadge id={p.id} /></div>
+      )) : <p className="muted">This type is practised within the mixed sets on the practice page.</p>}
+      <div className="btn-row"><Link className="btn soft" href={`/practice/${skill}`}>All {skill} practice</Link>{mockTests.filter(m => m.skill === skill).map(m => <Link key={m.id} className="btn soft" href={`/mock-tests/${m.id}`}>{m.title}</Link>)}</div>
+    </div>
+  );
   return (
     <>
-      <PageHeader crumbs={[[cap(skill), `/${skill}`], [t.name]]} title={t.name}>
+      <PageHeader crumbs={[[cap(skill), `/${skill}`], [t.name]]} title={t.name} lead={<span dangerouslySetInnerHTML={{ __html: t.what }} />}>
         <div className="btn-row" style={{ marginTop: 0 }}><span className="badge accent">{cap(skill)}</span><span className="badge">{t.freq}</span></div>
       </PageHeader>
       <SubNav items={SECTION_NAV[skill]} />
-      <div className="card">
-        <h3 className="mt0">What is it?</h3><Html as="p" html={t.what} />
-        <h4>What the instructions look like</h4>
-        <div className="instructions" style={{ background: 'var(--surface-2)', padding: '12px 16px', borderRadius: 8 }} dangerouslySetInnerHTML={{ __html: t.looksLike }} />
-        {t.definitions && <div style={{ marginTop: 12 }}><Html html={t.definitions} /></div>}
-      </div>
-      <div className="grid-2">
-        <div className="card"><h3 className="mt0">How to approach it – step by step</h3><List className="steps" items={t.strategy} /></div>
-        <div className="card"><h3 className="mt0">Common traps</h3><List className="xlist" items={t.traps} /></div>
-      </div>
-      <div className="card"><h3 className="mt0">Worked example</h3><Html html={t.example} /></div>
-      <div className="card" style={{ borderLeft: `4px solid var(--${skill})` }}>
-        <h3 className="mt0">Practise this question type</h3>
-        {practice.length ? practice.map(p => (
-          <div className="btn-row" key={p.id}><Link className="btn" href={`/practice/${skill}/${p.id}`}>{p.title}</Link><ProgressBadge id={p.id} /></div>
-        )) : <p className="muted">This type is practised within the mixed sets on the practice page.</p>}
-      </div>
-      <div className="btn-row" style={{ justifyContent: 'space-between' }}>
-        {prev ? <Link className="btn soft" href={`/${skill}/${prev.id}`}>← {prev.name}</Link> : <span />}
-        {next && <Link className="btn soft" href={`/${skill}/${next.id}`}>{next.name} →</Link>}
-      </div>
+      {ch ? <ChapterView ch={ch} accent={skill} extras={[{ id: 'practice', title: 'Practise this question type', node: practiceCard, after: 'end' }]} /> : (
+        <>
+          <div className="card">
+            <h3 className="mt0">What the instructions look like</h3>
+            <div className="instructions" style={{ background: 'var(--surface-2)', padding: '12px 16px', borderRadius: 8 }} dangerouslySetInnerHTML={{ __html: t.looksLike }} />
+            {t.definitions && <div style={{ marginTop: 12 }}><Html html={t.definitions} /></div>}
+          </div>
+          <div className="grid-2">
+            <div className="card"><h3 className="mt0">How to approach it – step by step</h3><List className="steps" items={t.strategy} /></div>
+            <div className="card"><h3 className="mt0">Common traps</h3><List className="xlist" items={t.traps} /></div>
+          </div>
+          <div className="card"><h3 className="mt0">Worked example</h3><Html html={t.example} /></div>
+          {practiceCard}
+        </>
+      )}
     </>
   );
 }

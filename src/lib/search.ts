@@ -1,12 +1,14 @@
 /* Builds the site-wide search index (run on the server, passed to the client search page) */
 import { grammar, ideaBank, listening, listeningSets, mockTests, reading, readingSets, speaking, vocabBanks, writing, writingTask2 } from '@/content';
 import { writingTasks } from './writing-tasks';
+import { bookChapters } from '@/content/book/toc';
 
 export interface SearchEntry { t: string; s: string; h: string; k: string }
 const strip = (s: string) => s.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
 export function buildSearchIndex(): SearchEntry[] {
   const idx: SearchEntry[] = [];
+  bookChapters.forEach(c => idx.push({ t: `Chapter ${c.no}: ${c.title}`, s: `${c.part}${c.sub ? ' · ' + c.sub : ''}`, h: c.href, k: 'Book chapter' }));
   idx.push({ t: 'Reading answer order: what to answer first', s: 'Which questions follow passage order, which to answer first, and which use the full passage', h: '/reading/answer-order', k: 'Reading strategy' });
   vocabBanks.forEach(c => c.groups.forEach(g => g.items.forEach(i => idx.push({ t: i[0], s: `${c.name} · ${i[1]}`, h: `/vocabulary/${c.id}`, k: 'Vocabulary' }))));
   reading.types.forEach(t => idx.push({ t: t.name, s: 'Reading question type – ' + strip(t.what).slice(0, 100), h: `/reading/${t.id}`, k: 'Question type' }));

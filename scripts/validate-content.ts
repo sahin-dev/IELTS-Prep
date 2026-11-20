@@ -3,7 +3,9 @@ import { allSets, grammar, listening, mockTests, pronunciation, reading, studyPl
 import { renderChart } from '../src/lib/charts';
 import { answerList, totalMarks } from '../src/lib/scoring';
 import { writingTasks } from '../src/lib/writing-tasks';
-import type { QuestionGroup } from '../src/lib/types';
+import type { Chapter, QuestionGroup } from '../src/lib/types';
+import { writingTask2, speaking } from '../src/content';
+import * as book from '../src/content/book';
 
 let errors = 0;
 const err = (m: string) => { errors++; console.log('ERROR:', m); };
@@ -75,11 +77,11 @@ vocabBanks.forEach(b => {
 });
 
 // Study plan links point to real routes
-const staticRoutes = ['/', '/exam', '/listening', '/reading', '/reading/answer-order', '/speaking', '/grammar', '/mock-tests', '/calculator', '/search', '/progress', '/resources', '/practice', '/practice/writing', '/practice/speaking', '/practice/drills', '/writing', '/writing/ideas', '/writing/band-descriptors', '/speaking/pronunciation', '/speaking/cue-cards', '/vocabulary'];
-studyPlan.forEach(w => w.tasks.forEach(([, h]) => {
+const staticRoutes = ['/book', '/book/how-to-study', '/reading/fundamentals', '/listening/fundamentals', '/writing/task-1', '/writing/task-2', '/writing/letters', '/speaking/topics', '/speaking/phrases', '/', '/exam', '/listening', '/reading', '/reading/answer-order', '/speaking', '/grammar', '/mock-tests', '/calculator', '/search', '/progress', '/resources', '/practice', '/practice/writing', '/practice/speaking', '/practice/drills', '/writing', '/writing/ideas', '/writing/band-descriptors', '/speaking/pronunciation', '/speaking/cue-cards', '/vocabulary'];
+function routeOk(h: string) {
   let ok = staticRoutes.includes(h);
   let m: RegExpMatchArray | null;
-  if ((m = h.match(/^\/(reading|listening)\/([\w-]+)$/))) ok = (m[1] === 'reading' ? reading : listening).types.some(t => t.id === m![2]);
+  if ((m = h.match(/^\/(reading|listening)\/([\w-]+)$/))) ok = ok || (m[1] === 'reading' ? reading : listening).types.some(t => t.id === m![2]);
   if ((m = h.match(/^\/practice\/(reading|listening)\/([\w-]+)$/))) ok = ids.has(m[2]);
   if ((m = h.match(/^\/practice\/writing\/([\w-]+)$/))) ok = wids.has(m[1]);
   if ((m = h.match(/^\/grammar\/([\w-]+)$/))) ok = grammar.some(g => g.id === m![1]);
@@ -88,11 +90,44 @@ studyPlan.forEach(w => w.tasks.forEach(([, h]) => {
   if ((m = h.match(/^\/writing\/task-2\/([\w-]+)$/))) ok = ['opinion', 'discussion', 'adv-disadv', 'problem-solution', 'two-part', 'positive-negative'].includes(m[1]);
   if ((m = h.match(/^\/speaking\/part-[123]$/))) ok = true;
   if ((m = h.match(/^\/mock-tests\/([\w-]+)$/))) ok = mockTests.some(x => x.id === m![1]);
-  if (!ok) err('study plan link broken: ' + h);
-}));
+  if ((m = h.match(/^\/writing\/letters\/([\w-]+)$/))) ok = writing.gt.types.some(t => t.id === m![1]);
+  return ok;
+}
+studyPlan.forEach(w => w.tasks.forEach(([, h]) => { if (!routeOk(h)) err('study plan link broken: ' + h); }));
+
+// The book: every TOC entry is a real, unique route; every type has a complete chapter
+const seen = new Set<string>();
+book.bookChapters.forEach(c => {
+  if (seen.has(c.href)) err('book TOC duplicate ' + c.href);
+  seen.add(c.href);
+  if (!routeOk(c.href)) err('book TOC link broken: ' + c.href);
+});
+function checkChapter(ch: Chapter | undefined, where: string) {
+  if (!ch) return err('missing chapter: ' + where);
+  if (ch.intro.length < 200) err(where + ': intro too short');
+  if (ch.method.length < 3) err(where + ': method needs at least 3 steps');
+  (['dos', 'donts', 'careful', 'checklist', 'summary'] as const).forEach(k => { if (!ch[k].length) err(`${where}: empty ${k}`); });
+  ch.worked?.forEach((w, i) => { if (!w.walk.length) err(`${where}: worked example ${i + 1} has no walkthrough`); if (w.figure) renderChart(w.figure); });
+  // Unbalanced tags are a common authoring slip
+  const html = JSON.stringify(ch);
+  ['b', 'i', 'p', 'ul', 'ol', 'li', 'table', 'tr', 'td', 'th', 'div', 'h4'].forEach(t => {
+    const open = (html.match(new RegExp(`<${t}[ >]`, 'g')) || []).length, close = (html.match(new RegExp(`</${t}>`, 'g')) || []).length;
+    if (open !== close) err(`${where}: <${t}> opened ${open} times, closed ${close}`);
+  });
+}
+reading.types.forEach(t => checkChapter(book.readingChapters[t.id], 'reading/' + t.id));
+listening.types.forEach(t => checkChapter(book.listeningChapters[t.id], 'listening/' + t.id));
+writing.task1.forEach(t => checkChapter(book.task1Chapters[t.id], 'task-1/' + t.id));
+writing.gt.types.forEach(t => checkChapter(book.letterChapters[t.id], 'letters/' + t.id));
+writingTask2.types.forEach(t => checkChapter(book.task2Chapters[t.id], 'task-2/' + t.id));
+speaking.parts.forEach(p => checkChapter(book.speakingChapters[p.id], 'speaking/' + p.id));
+grammar.forEach(g => checkChapter(book.grammarChapters[g.id], 'grammar/' + g.id));
+Object.entries(book.vocabChapters).forEach(([id, ch]) => { if (!vids.has(id)) err('vocab chapter for unknown bank ' + id); checkChapter(ch, 'vocabulary/' + id); });
+([['study method', book.studyMethod], ['reading fundamentals', book.readingFundamentals], ['listening fundamentals', book.listeningFundamentals], ['task 1 method', book.task1Method], ['letters method', book.lettersMethod], ['task 2 method', book.task2Method], ['speaking fundamentals', book.speakingFundamentals]] as [string, Chapter][]).forEach(([n, ch]) => checkChapter(ch, n));
 
 const questions = allSets.reduce((a, s) => a + totalMarks(s.groups), 0) + grammar.reduce((a, g) => a + totalMarks(g.exercises), 0) + totalMarks(pronunciation.exercises);
 console.log(`Sets: ${allSets.length} (${allSets.filter(s => s.id.startsWith('r-')).length} reading, ${allSets.filter(s => s.id.startsWith('l-')).length} listening) · mock tests: ${mockTests.length} · writing prompts: ${writingTasks.length}`);
 console.log(`Auto-marked questions: ${questions} · vocabulary entries: ${entries} in ${vocabBanks.length} banks · grammar topics: ${grammar.length}`);
+console.log(`Book: ${book.bookChapters.length} chapters in ${book.bookParts.length} parts`);
 console.log(errors ? `${errors} error(s)` : 'All content checks passed');
 process.exit(errors ? 1 : 0);
