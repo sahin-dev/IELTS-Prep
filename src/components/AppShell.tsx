@@ -7,7 +7,7 @@ import { speak } from '@/lib/tts';
 import { BookLabel, BookPager } from './BookNav';
 
 export const NAV: { title: string; items: [string, string, string][] }[] = [
-  { title: 'Start here', items: [['/', 'Dashboard', 'primary'], ['/book', 'The IELTS Book (contents)', 'primary'], ['/exam', 'Exam format & scoring', 'primary'], ['/progress', 'Study plan & progress', 'primary']] },
+  { title: 'Start here', items: [['/', 'Dashboard', 'primary'], ['/diagnostic', 'Find my starting level', 'primary'], ['/book', 'The IELTS Book (contents)', 'primary'], ['/exam', 'Exam format & scoring', 'primary'], ['/bands', 'Band levels & targets', 'primary'], ['/progress', 'Study plan & progress', 'primary']] },
   { title: 'Skills', items: [['/listening', 'Listening', 'listening'], ['/reading', 'Reading', 'reading'], ['/writing', 'Writing', 'writing'], ['/speaking', 'Speaking', 'speaking']] },
   { title: 'Language toolkit', items: [['/vocabulary', 'Vocabulary bank', 'vocab'], ['/grammar', 'Grammar & sentences', 'grammar'], ['/speaking/pronunciation', 'Pronunciation', 'speaking'], ['/writing/ideas', 'Task 2 idea bank', 'writing']] },
   { title: 'Practice & tests', items: [['/practice', 'Practice hub', 'primary'], ['/mock-tests', 'Mock tests', 'primary'], ['/practice/listening', 'Listening practice', 'listening'], ['/practice/reading', 'Reading practice', 'reading'], ['/practice/writing', 'Writing practice', 'writing'], ['/practice/speaking', 'Speaking simulator', 'speaking'], ['/practice/drills', 'Dictation drills', 'listening'], ['/practice/vocabulary', 'Vocabulary quiz', 'vocab']] },

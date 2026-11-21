@@ -7,11 +7,17 @@ import { listeningExtra } from './listening-extra';
 import { vocabWritingBanks } from './vocabulary-writing';
 import { vocabSkillBanks } from './vocabulary-skills';
 import { vocabExtraBanks } from './vocabulary-extra';
+import { topicBanks } from './vocabulary-topics';
 
 export { reading } from './reading-guide';
 export { listening } from './listening-guide';
-export { writing } from './writing-task1';
-export { writingTask2 } from './writing-task2';
+import { writing as writingBase } from './writing-task1';
+import { writingTask2 as writingTask2Base } from './writing-task2';
+import { letterPurposes } from './writing-letters-purpose';
+import { essayTypesExtra } from './writing-task2-extra';
+/* Letters: three register chapters, then seven purpose chapters. Essays: the original six types plus cause-effect and mixed. */
+export const writing = { ...writingBase, gt: { ...writingBase.gt, types: [...writingBase.gt.types, ...letterPurposes] } };
+export const writingTask2 = { ...writingTask2Base, types: [...writingTask2Base.types, ...essayTypesExtra] };
 export { bandDescriptors, ideaBank, task1Mistakes } from './writing-extra';
 export { speaking } from './speaking';
 export { pronunciation } from './pronunciation';
@@ -33,7 +39,7 @@ export const listeningSets: TestSet[] = [...listeningPractice, ...listeningExtra
 export const allSets: TestSet[] = [...readingSets, ...listeningSets];
 export const getSet = (id: string) => allSets.find(s => s.id === id);
 
-const SECTION_ORDER = ['Writing Task 1', 'Writing Task 2', 'Grammar & Cohesion', 'Listening', 'Reading', 'Speaking'];
-export const vocabBanks: VocabBank[] = [...vocabWritingBanks, ...vocabExtraBanks, ...vocabSkillBanks]
+const SECTION_ORDER = ['Topic vocabulary', 'Writing Task 1', 'Writing Task 2', 'Grammar & Cohesion', 'Listening', 'Reading', 'Speaking'];
+export const vocabBanks: VocabBank[] = [...vocabWritingBanks, ...vocabExtraBanks, ...vocabSkillBanks, ...topicBanks]
   .sort((a, b) => SECTION_ORDER.indexOf(a.section) - SECTION_ORDER.indexOf(b.section));
 export const vocabSections = SECTION_ORDER.filter(s => vocabBanks.some(b => b.section === s));

@@ -1,6 +1,6 @@
 # IELTS Prep Studio (Next.js)
 
-A complete IELTS preparation platform organised as a book: **The IELTS Book** has 80 chapters in 7 parts (Getting started, Listening, Reading, Writing, Speaking, Grammar & vocabulary, Test yourself).
+A complete IELTS preparation platform organised as a book: **The IELTS Book** has 139 chapters in 10 parts (Getting started, Listening, Reading, Writing, Speaking, Band score development, Grammar masterclass, Vocabulary, Advanced English, Test yourself).
 
 Every question-type chapter contains:
 - what the task is and how to read its instructions;
@@ -12,7 +12,7 @@ Every question-type chapter contains:
 
 Around the book are original practice sets, full mock tests, spaced-repetition flashcards, writing practice with automatic analysis, a speaking simulator and a pronunciation guide.
 
-Built with **Next.js 16 (App Router) + React 19 + TypeScript**. All 231 pages are statically generated.
+Built with **Next.js 16 (App Router) + React 19 + TypeScript**. All 355 pages are statically generated.
 
 ## Getting started
 
@@ -37,13 +37,14 @@ To host it as a plain static site (GitHub Pages, Netlify, any web host), uncomme
 | Section | Routes |
 |---|---|
 | Book | `/book` contents & reading progress · `/book/how-to-study` · every chapter page shows its chapter number, a *Mark as completed* button and previous/next links |
-| Start | `/` dashboard (streak, exam countdown, next tasks) · `/exam` the test explained · `/exam/scoring` how IELTS is scored · `/exam/test-day` booking, test day & results · `/progress` 8-week plan, results, writing history, error log, backup |
+| Start | `/` dashboard (streak, exam countdown, next tasks, recommendations) · `/diagnostic` one-week assessment · `/exam` the test explained · `/exam/scoring` how IELTS is scored · `/exam/test-day` booking, test day & results · `/progress` 8-week plan, results, writing history, error log, backup |
 | Listening | `/listening` overview · `/listening/fundamentals` · `/listening/[type]` (6 chapters) |
 | Reading | `/reading` overview · `/reading/fundamentals` · `/reading/answer-order` · `/reading/[type]` (11 chapters) |
-| Writing | `/writing` · `/writing/task-1/[type]` (7 visual types) · `/writing/letters/[type]` (3) · `/writing/task-2/[type]` (6) · `/writing/ideas` · `/writing/band-descriptors` |
-| Speaking | `/speaking` · `/speaking/part-1…3` · `/speaking/topics` · `/speaking/cue-cards` · `/speaking/phrases` · `/speaking/pronunciation` |
-| Language | `/vocabulary` + `/vocabulary/[bank]` (19 banks: list, flashcards, quiz) · `/grammar` + `/grammar/[topic]` (12 topics) |
-| Practice | `/practice` · `/practice/reading/[id]` (17) · `/practice/listening/[id]` (9) · `/practice/writing/[id]` (72) · `/practice/speaking` (+ `/[card]`) · `/practice/drills` · `/practice/vocabulary` |
+| Writing | `/writing` · `/writing/task-1/[type]` (7 visual types) · `/writing/letters/[type]` (10: 3 registers + 7 purposes) · `/writing/task-2/[type]` (8) · `/writing/ideas` · `/writing/band-descriptors` |
+| Speaking | `/speaking` · `/speaking/part-1…3` · `/speaking/topics` · `/speaking/cue-cards` · `/speaking/phrases` · `/speaking/pronunciation` + `/speaking/pronunciation/[topic]` (5-chapter masterclass) |
+| Language | `/vocabulary` + `/vocabulary/[bank]` (45 banks: list, flashcards, quiz) · `/vocabulary/topics` (26 topic banks) · `/grammar` + `/grammar/[topic]` (44 topics in 5 groups) |
+| Bands & advanced | `/bands` + `/bands/writing` · `/bands/speaking` · `/bands/listening-reading` · `/advanced` + `/advanced/[topic]` (6 chapters) |
+| Practice | `/practice` · `/practice/reading/[id]` (17) · `/practice/listening/[id]` (9) · `/practice/writing/[id]` (108) · `/practice/library` (search and filter everything) · `/practice/speaking` (+ `/[card]`) · `/practice/drills` · `/practice/vocabulary` |
 | Tests | `/mock-tests` · `/mock-tests/listening-1` · `/mock-tests/reading-1` (40 questions each, band score) |
 | Tools | `/calculator` · `/resources` · `/search?q=` |
 

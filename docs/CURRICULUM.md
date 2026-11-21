@@ -2,7 +2,7 @@
 
 This file tracks the full platform specification (16 parts) against what the site contains, and sets the order in which the rest will be built. Update the status columns whenever a part is finished.
 
-Last updated: 2026-11-20.
+Last updated: 2026-11-21.
 
 ## The chapter standard ("definition of done")
 
@@ -28,40 +28,39 @@ A chapter counts as **complete** only when it has everything the specification's
 
 Legend: ✅ complete to the standard above · 🟡 exists but below the standard (usually missing `exercises`, `references` or depth) · 🔴 not started · ⚙️ needs a server, an AI model or audio production (see "Decisions needed").
 
-| Spec part | Status | What exists | Main gaps |
+| Spec part | Status | What exists (as of 2026-11-21) | Still to do |
 |---|---|---|---|
-| 1. Examination fundamentals | ✅ | `/exam`, `/exam/scoring`, `/exam/test-day` (3 chapters with exercises and sources, verified 2026-11-20); target-setting section in `/book/how-to-study` | Re-verify facts every 6 months (delivery modes, results times, One Skill Retake acceptance) |
-| 2. Grammar masterclass | 🟡 | Grouped A–E on `/grammar` (data: `src/content/grammar-masterclass.ts`). **A. Parts of speech ✅** (2026-11-20): nouns, pronouns, verbs, adjectives, adverbs, prepositions, conjunctions, interjections, determiners (`book/grammar-pos-a/b/c.ts`); articles exists (🟡). **B. Tenses ✅** (2026-11-20): all twelve tenses (`book/grammar-tense-a/b/c.ts`) after the older tenses overview. Older topics: sentence types, clauses, agreement, conditionals, passive, comparatives, advanced, punctuation, common errors, paraphrasing | Articles and tenses overview: add exercises/sources. C: subject and predicate, direct/indirect speech, sentence transformation. D: modals, gerunds/infinitives, participles, phrasal verbs, parallelism, inversion, emphasis, cleft sentences. E: grammar for Writing with sentence-improvement exercises |
-| 3. Vocabulary masterclass | 🟡 | 19 banks with flashcards (spaced repetition) and quizzes; chapters for linking, phrasal verbs, collocations; AWL essentials | Topic chapters for the 26 listed topics (only general Task 2 topic vocabulary exists); full AWL with pronunciation and word families; synonyms/antonyms, connotation, confused words; daily targets and personal collections |
-| 4. Listening masterclass | 🟡 | Fundamentals + 6 question-type chapters; 9 practice sets; dictation drills | Exercises and sources in each chapter; separate chapters for accents, connected speech and weak forms, and the problem-solving strategies list (corrections, numbers and names, long academic talks); multiple-answer MCQ as its own chapter; realistic recordings ⚙️ |
-| 5. Reading masterclass | 🟡 | Fundamentals, answer order, 11 question-type chapters; 17 practice sets | Exercises and sources in each chapter; skills lessons (skimming, scanning, intensive/extensive reading, reference words, argument development); a full time-management chapter; more full-length passages |
-| 6. Writing masterclass | 🟡 | Task 1 method + 7 visual types; letter method + 3 registers; Task 2 method + 6 essay types; idea bank; band descriptors; 72 prompts; rule-based analyser | Before-and-after maps and multiple visuals as their own chapters; letters by purpose (complaint, request, apology, invitation, application, explanation, recommendation); cause-and-effect, direct-question and mixed essays; weak/average/strong annotated essays at several bands; AI feedback lab ⚙️ |
-| 7. Speaking masterclass | 🟡 | Overview, Parts 1–3 chapters, topic bank, cue cards, phrases, pronunciation page, simulator (recording + text-to-speech examiner) | Part 1 topic chapters (16 topics); Part 2 skills (note-taking, storytelling, unfamiliar topics); Part 3 question types; pronunciation masterclass (IPA, vowels, consonants, stress, intonation, rhythm); AI speaking partner ⚙️ |
-| 8. Advanced English development | 🔴 | – | Whole part: critical thinking, argument, paraphrasing and summarising, research skills, note-taking, presentations, with progressive exercises |
-| 9. Practice question library | 🟡 | 26 reading/listening sets, 72 writing prompts, cue cards, grammar and vocabulary exercises | Filtering by module, type, difficulty, topic, target band, time and skill; learning objectives on every item; General Training reading sets |
-| 10. Full mock examinations | 🟡 | 2 mock tests (Listening 1, Academic Reading 1) with timers and band scores | General Training Reading mocks; Writing and Speaking mocks; complete four-skill simulation; performance reports; AI evaluation for Writing/Speaking ⚙️ |
-| 11. Band score development | 🟡 | Writing band descriptors page; band comparisons inside some chapters | One chapter per band level (4–9) per skill, with annotated Writing and Speaking samples at each band and a "gap to target" tool |
-| 12. Personalised learning system | 🟡 | Dashboard, streak, exam countdown, 8-week plan, results history, error log, chapter completion, export/backup (all in browser storage) | Diagnostic test that sets a roadmap; adaptive recommendations (e.g. weak TFNG → TFNG lessons); bookmarks and notes; cross-device sync ⚙️ |
-| 13. AI tutor | 🔴 ⚙️ | – | Whole part |
-| 14. Content quality standards | 🟡 | Standard defined above; validator checks; Part 1 fully sourced | Retrofit `references` and `verified` to the older chapters |
-| 15. Content pipeline | ✅ | One part or chapter per session, outline → research → write → validate → build | – |
+| 1. Examination fundamentals | ✅ | `/exam`, `/exam/scoring`, `/exam/test-day` (verified against ielts.org 2026-11-20); target setting in `/book/how-to-study` | Re-verify facts every 6 months |
+| 2. Grammar masterclass | ✅ | 44 topics in groups A–E on `/grammar` (`content/grammar-masterclass.ts`): parts of speech, all 12 tenses, sentence structure, advanced grammar, grammar for Writing | Optional: deepen the 12 older topic chapters (articles, clauses, conditionals…) to the length of the new ones |
+| 3. Vocabulary masterclass | 🟡 | 45 banks (1,123 entries) with spaced-repetition flashcards and quizzes, incl. 26 topic banks + method chapter `/vocabulary/topics`; AWL essentials; linking, phrasal verbs, collocations, word formation, register | Full AWL (570 families) with pronunciation; synonyms/antonyms, connotation and commonly confused words chapters; daily targets and personal word collections |
+| 4. Listening masterclass | 🟡 | Fundamentals + 6 question-type chapters (worked examples, sources, linked practice), 9 practice sets, dictation drills; connected speech and weak forms taught in the pronunciation masterclass | Chapters on accents and on the problem-solving strategies (corrections, numbers/names, long talks); multiple-answer MCQ as its own chapter; more practice sets; real recordings ⚙️ |
+| 5. Reading masterclass | 🟡 | Fundamentals, answer order, 11 question-type chapters (worked examples, sources, linked practice), 17 practice sets; academic reading and research skills in Part 8 | Separate skills lessons (skimming, scanning, reference words, argument development); a full time-management chapter; more full-length passages, esp. General Training |
+| 6. Writing masterclass | 🟡 | Task 1 method + 7 visual types; 10 letter chapters (3 registers + 7 purposes); Task 2 method + 8 essay types; idea bank; band descriptors; 108 timed prompts; rule-based analyser; annotated essays at four bands (`/bands/writing`) | Annotated Task 1 and letter samples at several bands; AI feedback lab ⚙️ |
+| 7. Speaking masterclass | 🟡 | Overview, Parts 1–3 chapters, topic bank, 28 cue cards, phrases, simulator; pronunciation masterclass (5 chapters, `/speaking/pronunciation/[topic]`); annotated answers at four bands (`/bands/speaking`); discourse markers chapter | Part 1 topic chapters (16 topics); Part 2 skills (storytelling, unfamiliar topics); Part 3 question types; AI speaking partner ⚙️ |
+| 8. Advanced English development | ✅ | `/advanced`: critical thinking, argument, summarising, note-taking, research, presentations (other Part 8 skills mapped to existing chapters) | More progressive exercises |
+| 9. Practice question library | 🟡 | `/practice/library`: 234 items (sets, prompts, cue cards, chapter exercises) filterable by skill, type, kind, level, time and search | Topic and target-band tags; learning objectives on every item; more General Training reading sets |
+| 10. Full mock examinations | 🟡 | 2 mock tests (Listening 1, Academic Reading 1) with timers and band scores; speaking simulator runs a full interview | General Training Reading mock; a 60-minute two-task Writing mock component; more Listening/Reading mocks; four-skill simulation; AI evaluation ⚙️ |
+| 11. Band score development | ✅ | `/bands`: band levels 4–9, Writing and Speaking at every band (annotated), Listening & Reading error profiles | More sample sets; an interactive gap-to-target tool |
+| 12. Personalised learning system | 🟡 | Dashboard, streak, countdown, 8-week plan, results, error log, chapter completion, backup; `/diagnostic` (one-week assessment); recommendations from saved results on the dashboard, `/progress` and the library (weakest areas → chapter + practice) | Bookmarks and notes; target-band setting stored and used by the plan; cross-device sync ⚙️ |
+| 13. AI tutor | 🔴 ⚙️ | – | Whole part (needs the decision below) |
+| 14. Content quality standards | ✅ | Validator checks answers, word limits (incl. limits stated only in instructions), explanations, internal links, sources, tag balance; every chapter has sources | – |
+| 15. Content pipeline | ✅ | Outline → research → write → validate → build, one part at a time | – |
 | 16. Final quality standard | – | Applies to everything above | – |
+
+The book now has 139 chapters in 10 parts, 735 auto-marked questions and 355 pre-rendered pages.
 
 ## Build order
 
-One part (or one coherent group of chapters) per session, each finished to the standard before moving on:
+Done (2026-11-20/21): Part 1 · Part 2 (all of A–E) · sources retrofit · letters by purpose, cause–effect and mixed essays · Part 11 · topic vocabulary · pronunciation masterclass · Part 8 · practice library, diagnostic and recommendations.
 
-1. ~~Part 1: Examination fundamentals~~ – done 2026-11-20.
-2. ~~Part 2A: Parts of speech~~ – done 2026-11-20 (articles retrofit pending).
-3. ~~Part 2B: Tenses, one chapter each (12)~~ – done 2026-11-20 (`book/grammar-tense-a/b/c.ts`).
-4. Part 2C–E: Sentence structure, advanced grammar, grammar for Writing.
-5. Retrofit exercises and sources to the existing Reading chapters, then the Listening chapters (high value for the exam, quick to bring up to standard).
-6. Part 6 gaps (letter purposes, essay types, annotated band samples) together with Part 11 (band development).
-7. Part 3 topic vocabulary chapters.
-8. Part 7 gaps and the pronunciation masterclass.
-9. Parts 9, 10 and 12 (library filters, more mocks, diagnostic and adaptive plan).
-10. Part 8 (advanced English).
-11. The ⚙️ features, once the decisions below are made.
+Next, in this order:
+
+1. Speaking: Part 1 topic chapters, Part 2 skills, Part 3 question types.
+2. Reading: skills lessons and the time-management chapter; Listening: accents and problem-solving strategies chapter.
+3. Mock tests: General Training Reading mock (new original passages); a two-task Writing mock component; Listening/Reading mock 2.
+4. Vocabulary: full AWL, synonyms/antonyms, confused words, connotation; personal word collections.
+5. Annotated Task 1 and letter samples at several bands.
+6. The ⚙️ features, once the decisions below are made.
 
 ## Decisions needed (owner: you)
 

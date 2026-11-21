@@ -3,7 +3,9 @@ import { Html, PageHeader } from '@/components/ui';
 import { SpeakButton, SubNav } from '@/components/client-ui';
 import TestRunner from '@/components/TestRunner';
 import { SECTION_NAV } from '@/lib/nav';
+import Link from 'next/link';
 import { pronunciation } from '@/content';
+import { pronunciationChapters } from '@/content/book';
 
 export const metadata: Metadata = { title: 'Pronunciation guide' };
 
@@ -13,6 +15,9 @@ export default function PronunciationPage() {
       <PageHeader crumbs={[['Speaking', '/speaking'], ['Pronunciation']]} title="Pronunciation guide" />
       <SubNav items={SECTION_NAV.speaking} />
       <Html html={pronunciation.intro} />
+      <div className="callout tip"><strong>Pronunciation masterclass</strong>This page is a quick guide. For full chapters with method, examples, listen-and-repeat practice and exercises, work through:
+        <ol>{Object.entries(pronunciationChapters).map(([id, p]) => <li key={id}><Link href={`/speaking/pronunciation/${id}`}>{p.title}</Link></li>)}</ol>
+      </div>
       <div className="pill-nav">{pronunciation.sections.map(s => <a key={s.id} href={`#${s.id}`}>{s.title}</a>)}</div>
       {pronunciation.sections.map(s => (
         <section className="card" key={s.id} id={s.id}>

@@ -15,6 +15,7 @@ export default function PracticeHub() {
         lead="Targeted practice for every question type with instant marking, explanations and band estimates. The cycle that works: learn the strategy → practise → review every mistake → log it." />
       <SubNav items={SECTION_NAV.practice} />
       <div className="grid">
+        <Tile href="/practice/library" title="Practice library">Search and filter every practice item by skill, type, level and time – with personalised recommendations.</Tile>
         <Tile href="/practice/listening" accent="listening" title="Listening sets">{listeningSets.length} audio sets covering Parts 1–4 and every question type.</Tile>
         <Tile href="/practice/reading" accent="reading" title="Reading sets">{readingSets.length} sets: one or more per question type, full passages and General Training.</Tile>
         <Tile href="/practice/writing" accent="writing" title="Writing practice">{writingTasks.length} prompts with timer, analyser and model answers.</Tile>

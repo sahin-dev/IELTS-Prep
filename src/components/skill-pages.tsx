@@ -14,6 +14,21 @@ const data = (skill: RL) => (skill === 'reading'
   : { guide: listening, sets: listeningSets, chapters: listeningChapters });
 const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 
+const CORE_SKILLS: Record<RL, { title: string; text: string; example: string }[]> = {
+  reading: [
+    { title: 'Skim for structure', text: 'Read selectively to identify each paragraph’s purpose and the passage’s overall argument.', example: 'After 60–90 seconds, you should be able to label paragraphs: definition, cause, example, objection, result.' },
+    { title: 'Scan for a target', text: 'Search for names, dates, technical terms and distinctive nouns, then read the surrounding sentence carefully.', example: 'Scan to locate “Dr Khan”; read before and after the name to decide what the writer actually claims.' },
+    { title: 'Recognise paraphrase', text: 'Expect the question and passage to express the same meaning with different vocabulary or grammar.', example: '“A sharp decline in attendance” may match “far fewer people took part”. Match meaning, not repeated words.' },
+    { title: 'Prove from evidence', text: 'Choose an answer only when a precise part of the passage supports it; outside knowledge is irrelevant.', example: 'For NOT GIVEN, you must show that the required information is absent—not merely difficult to find.' }
+  ],
+  listening: [
+    { title: 'Predict before listening', text: 'Use the heading, question and grammar around each gap to predict the kind of answer you need.', example: '“The course begins on ___” predicts a day or date; the word limit tells you how much to write.' },
+    { title: 'Follow signposts', text: 'Listen for language that announces a new stage, contrast, example, correction or conclusion.', example: '“The main drawback, however…” signals both a change of direction and likely answer content.' },
+    { title: 'Survive distractors', text: 'Speakers mention plausible wrong answers before correcting, rejecting or replacing them.', example: '“We planned to meet on Tuesday, but Thursday works better” means Thursday is the answer.' },
+    { title: 'Write an exact answer', text: 'Meaning is not enough: spelling, plural endings, grammar and the stated word limit all matter.', example: 'If the instruction says ONE WORD ONLY, “the library” is invalid even when the location is correct.' }
+  ]
+};
+
 export function SkillOverview({ skill }: { skill: RL }) {
   const { guide, sets } = data(skill);
   const mock = mockTests.find(m => m.skill === skill);
@@ -23,6 +38,18 @@ export function SkillOverview({ skill }: { skill: RL }) {
       <SubNav items={SECTION_NAV[skill]} />
       <div className="callout tip"><strong>New to IELTS {cap(skill)}?</strong>Start with the <Link href={`/${skill}/fundamentals`}>{cap(skill)} fundamentals chapter</Link>, then read the chapter for each question type below. Each chapter has a step-by-step method, worked examples with full solutions, do&apos;s and don&apos;ts, and the traps to watch for.{skill === 'reading' && <> Not sure which questions to answer first? See <Link href="/reading/answer-order">what to answer first</Link>.</>}</div>
       <div className="card"><Html html={guide.intro} /></div>
+      <h2>The four core {skill} abilities</h2>
+      <p className="muted">Question-type techniques work only when these underlying abilities are secure. Use the examples as a quick self-check: can you explain and demonstrate each one?</p>
+      <div className="concept-grid">
+        {CORE_SKILLS[skill].map((item, index) => (
+          <article className={`concept-card c-${skill}`} key={item.title}>
+            <span className="concept-no">0{index + 1}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+            <div className="concept-example"><b>In practice</b>{item.example}</div>
+          </article>
+        ))}
+      </div>
       <h2>All {cap(skill)} question types</h2>
       <p className="muted">Each type has its own chapter: what it tests, how to read the instructions, the method in order, worked examples, traps and a final checklist. Each one links to targeted practice.</p>
       <div className="grid">

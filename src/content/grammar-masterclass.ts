@@ -33,7 +33,18 @@ const newTopics: GrammarTopic[] = [
   { id: 'future-simple', group: 'B', name: 'Future simple and other future forms', short: 'Will, be going to, the present continuous and present simple for the future – and Task 1 projections.' },
   { id: 'future-continuous', group: 'B', name: 'Future continuous', short: 'Actions in progress at a future time, and expected future events.' },
   { id: 'future-perfect', group: 'B', name: 'Future perfect', short: 'Actions completed before a future time: "by 2050 the population will have doubled".' },
-  { id: 'future-perfect-continuous', group: 'B', name: 'Future perfect continuous', short: 'Duration up to a point in the future.' }
+  { id: 'future-perfect-continuous', group: 'B', name: 'Future perfect continuous', short: 'Duration up to a point in the future.' },
+  { id: 'subject-predicate', group: 'C', name: 'Subject, predicate and clauses', short: 'Clause elements, the seven basic patterns, independent and dependent clauses, fragments and run-ons.' },
+  { id: 'reported-speech', group: 'C', name: 'Direct and reported speech', short: 'Reporting verbs, backshift, reported questions and commands – and reporting views in Task 2.' },
+  { id: 'sentence-transformation', group: 'C', name: 'Sentence transformation', short: 'Same meaning, different structure: the grammar of paraphrase.' },
+  { id: 'modals', group: 'D', name: 'Modal verbs', short: 'Ability, obligation, advice, possibility, deduction – recommending and hedging in Task 2.' },
+  { id: 'gerunds-infinitives', group: 'D', name: 'Gerunds and infinitives', short: '-ing or to? Verb patterns, purpose, prepositional "to" and verbs that change meaning.' },
+  { id: 'participles', group: 'D', name: 'Participles and participle clauses', short: 'Reduced relative clauses, time/reason/result clauses, and the dangling participle.' },
+  { id: 'phrasal-verbs', group: 'D', name: 'Phrasal verbs: the grammar', short: 'Separable, inseparable and three-part phrasal verbs, pronoun position and register.' },
+  { id: 'parallelism', group: 'D', name: 'Parallel structure', short: 'Balanced lists, comparisons and correlative pairs.' },
+  { id: 'inversion', group: 'D', name: 'Inversion', short: 'Never have…, Not only does…, Had I known…: formal emphasis, used sparingly.' },
+  { id: 'emphasis-cleft', group: 'D', name: 'Emphasis and cleft sentences', short: 'It is … that…, What … is…, emphatic do – highlighting your key point.' },
+  { id: 'grammar-for-writing', group: 'E', name: 'Grammar for IELTS Writing', short: 'Range and accuracy in the descriptors, controlled complexity, sentence improvement and proofreading.' }
 ];
 
 /* Groups for the older topics */
@@ -48,9 +59,9 @@ const ORDER = [
   'tenses', 'present-simple', 'present-continuous', 'present-perfect', 'present-perfect-continuous',
   'past-simple', 'past-continuous', 'past-perfect', 'past-perfect-continuous',
   'future-simple', 'future-continuous', 'future-perfect', 'future-perfect-continuous',
-  'sentence-types', 'clauses', 'agreement', 'conditionals', 'passive',
-  'comparatives', 'advanced', 'punctuation', 'common-errors',
-  'paraphrasing'
+  'subject-predicate', 'sentence-types', 'clauses', 'agreement', 'conditionals', 'passive', 'reported-speech', 'sentence-transformation',
+  'modals', 'gerunds-infinitives', 'participles', 'phrasal-verbs', 'comparatives', 'parallelism', 'inversion', 'emphasis-cleft', 'advanced', 'punctuation', 'common-errors',
+  'grammar-for-writing', 'paraphrasing'
 ];
 
 const all = [...baseTopics.map(t => ({ ...t, group: t.group || groupOf[t.id] || 'D' })), ...newTopics];

@@ -6,6 +6,8 @@ import { writingTasks } from '../src/lib/writing-tasks';
 import type { Chapter, QuestionGroup } from '../src/lib/types';
 import { writingTask2, speaking } from '../src/content';
 import * as book from '../src/content/book';
+import { bandChapters } from '../src/content/book/bands';
+import { advancedChapters, advancedOverview } from '../src/content/book/advanced';
 
 let errors = 0;
 const err = (m: string) => { errors++; console.log('ERROR:', m); };
@@ -85,7 +87,7 @@ vocabBanks.forEach(b => {
 });
 
 // Study plan links point to real routes
-const staticRoutes = ['/book', '/book/how-to-study', '/exam/scoring', '/exam/test-day', '/reading/fundamentals', '/listening/fundamentals', '/writing/task-1', '/writing/task-2', '/writing/letters', '/speaking/topics', '/speaking/phrases', '/', '/exam', '/listening', '/reading', '/reading/answer-order', '/speaking', '/grammar', '/mock-tests', '/calculator', '/search', '/progress', '/resources', '/practice', '/practice/writing', '/practice/speaking', '/practice/drills', '/writing', '/writing/ideas', '/writing/band-descriptors', '/speaking/pronunciation', '/speaking/cue-cards', '/vocabulary'];
+const staticRoutes = ['/book', '/book/how-to-study', '/exam/scoring', '/exam/test-day', '/bands', '/bands/writing', '/bands/speaking', '/bands/listening-reading', '/vocabulary/topics', '/advanced', '/practice/library', '/diagnostic', '/reading/fundamentals', '/listening/fundamentals', '/writing/task-1', '/writing/task-2', '/writing/letters', '/speaking/topics', '/speaking/phrases', '/', '/exam', '/listening', '/reading', '/reading/answer-order', '/speaking', '/grammar', '/mock-tests', '/calculator', '/search', '/progress', '/resources', '/practice', '/practice/writing', '/practice/speaking', '/practice/drills', '/writing', '/writing/ideas', '/writing/band-descriptors', '/speaking/pronunciation', '/speaking/cue-cards', '/vocabulary'];
 function routeOk(h: string) {
   let ok = staticRoutes.includes(h);
   let m: RegExpMatchArray | null;
@@ -93,10 +95,12 @@ function routeOk(h: string) {
   if ((m = h.match(/^\/practice\/(reading|listening)\/([\w-]+)$/))) ok = ids.has(m[2]);
   if ((m = h.match(/^\/practice\/writing\/([\w-]+)$/))) ok = wids.has(m[1]);
   if ((m = h.match(/^\/grammar\/([\w-]+)$/))) ok = grammar.some(g => g.id === m![1]);
-  if ((m = h.match(/^\/vocabulary\/([\w-]+)$/))) ok = vids.has(m[1]);
+  if ((m = h.match(/^\/vocabulary\/([\w-]+)$/))) ok = ok || vids.has(m[1]);
   if ((m = h.match(/^\/writing\/task-1\/([\w-]+)$/))) ok = writing.task1.some(t => t.id === m![1]);
-  if ((m = h.match(/^\/writing\/task-2\/([\w-]+)$/))) ok = ['opinion', 'discussion', 'adv-disadv', 'problem-solution', 'two-part', 'positive-negative'].includes(m[1]);
+  if ((m = h.match(/^\/writing\/task-2\/([\w-]+)$/))) ok = writingTask2.types.some(t => t.id === m![1]);
   if ((m = h.match(/^\/speaking\/part-[123]$/))) ok = true;
+  if ((m = h.match(/^\/speaking\/pronunciation\/([\w-]+)$/))) ok = m[1] in book.pronunciationChapters;
+  if ((m = h.match(/^\/advanced\/([\w-]+)$/))) ok = m[1] in advancedChapters;
   if ((m = h.match(/^\/mock-tests\/([\w-]+)$/))) ok = mockTests.some(x => x.id === m![1]);
   if ((m = h.match(/^\/writing\/letters\/([\w-]+)$/))) ok = writing.gt.types.some(t => t.id === m![1]);
   return ok;
@@ -147,6 +151,11 @@ writing.gt.types.forEach(t => checkChapter(book.letterChapters[t.id], 'letters/'
 writingTask2.types.forEach(t => checkChapter(book.task2Chapters[t.id], 'task-2/' + t.id));
 speaking.parts.forEach(p => checkChapter(book.speakingChapters[p.id], 'speaking/' + p.id));
 grammar.forEach(g => checkChapter(book.grammarChapters[g.id], 'grammar/' + g.id));
+Object.entries(bandChapters).forEach(([id, ch]) => checkChapter(ch, 'bands/' + id));
+checkChapter(book.topicVocabChapter, 'vocabulary/topics');
+Object.entries(book.pronunciationChapters).forEach(([id, p]) => checkChapter(p.chapter, 'pronunciation/' + id));
+checkChapter(advancedOverview, 'advanced');
+Object.entries(advancedChapters).forEach(([id, a]) => checkChapter(a.chapter, 'advanced/' + id));
 Object.entries(book.vocabChapters).forEach(([id, ch]) => { if (!vids.has(id)) err('vocab chapter for unknown bank ' + id); checkChapter(ch, 'vocabulary/' + id); });
 ([['exam format', book.examFormat], ['exam scoring', book.examScoring], ['exam test day', book.examDay], ['study method', book.studyMethod], ['reading fundamentals', book.readingFundamentals], ['listening fundamentals', book.listeningFundamentals], ['task 1 method', book.task1Method], ['letters method', book.lettersMethod], ['task 2 method', book.task2Method], ['speaking fundamentals', book.speakingFundamentals]] as [string, Chapter][]).forEach(([n, ch]) => checkChapter(ch, n));
 

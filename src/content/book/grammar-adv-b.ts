@@ -237,8 +237,8 @@ export const advChaptersB: Record<string, Chapter> = {
         {
           kind: 'choice', instructions: 'Choose the better sentence for formal writing, <b>A or B</b>.',
           questions: [
-            { n: 5, q: '', opts: ['The reason is because people work longer hours.', 'The reason is that people work longer hours.'], a: 'B', x: '<i>The reason is because</i> is redundant; use <i>that</i>.' },
-            { n: 6, q: '', opts: ['It is education that offers the best route out of poverty.', 'It is education offers the best route out of poverty.'], a: 'A', x: 'It-clefts need <i>that</i> (or <i>which/who</i>).' }
+            { n: 5, q: 'Which is better for formal writing?', opts: ['The reason is because people work longer hours.', 'The reason is that people work longer hours.'], a: 'B', x: '<i>The reason is because</i> is redundant; use <i>that</i>.' },
+            { n: 6, q: 'Which is better for formal writing?', opts: ['It is education that offers the best route out of poverty.', 'It is education offers the best route out of poverty.'], a: 'A', x: 'It-clefts need <i>that</i> (or <i>which/who</i>).' }
           ]
         }
       ]

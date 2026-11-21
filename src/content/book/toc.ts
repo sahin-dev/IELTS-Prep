@@ -12,7 +12,8 @@ export const bookParts: TocPart[] = [
       { href: '/exam/scoring', title: 'How IELTS is scored', sub: 'The band scale, marking criteria, overall band rounding, half bands' },
       { href: '/exam/test-day', title: 'Booking, test day and results', sub: 'Registration, test-day rules, results, remarks, retakes, common mistakes' },
       { href: '/book/how-to-study', title: 'How to prepare: target and study method', sub: 'Set a realistic target, then diagnose, learn, practise, review' },
-      { href: '/progress', title: 'Your 8-week study plan', sub: 'A day-by-day plan and your progress record' }
+      { href: '/diagnostic', title: 'Diagnostic: find your starting level', sub: 'A one-week assessment that feeds your recommendations' },
+      { href: '/progress', title: 'Your 8-week study plan', sub: 'A day-by-day plan, recommendations and your progress record' }
     ]
   },
   {
@@ -65,6 +66,13 @@ export const bookParts: TocPart[] = [
       { href: '/writing/letters/formal', title: 'Formal letters' },
       { href: '/writing/letters/semi', title: 'Semi-formal letters' },
       { href: '/writing/letters/informal', title: 'Informal letters' },
+      { href: '/writing/letters/complaint', title: 'Letters by purpose: Complaint' },
+      { href: '/writing/letters/request', title: 'Letters by purpose: Request' },
+      { href: '/writing/letters/apology', title: 'Letters by purpose: Apology' },
+      { href: '/writing/letters/invitation', title: 'Letters by purpose: Invitation' },
+      { href: '/writing/letters/application', title: 'Letters by purpose: Application' },
+      { href: '/writing/letters/explanation', title: 'Letters by purpose: Explanation' },
+      { href: '/writing/letters/recommendation', title: 'Letters by purpose: Recommendation' },
       { href: '/writing/task-2', title: 'Task 2: the essay method', sub: 'Analyse, plan, write, check' },
       { href: '/writing/task-2/opinion', title: 'Task 2: Opinion essays' },
       { href: '/writing/task-2/discussion', title: 'Task 2: Discussion essays' },
@@ -72,6 +80,8 @@ export const bookParts: TocPart[] = [
       { href: '/writing/task-2/problem-solution', title: 'Task 2: Problem & solution' },
       { href: '/writing/task-2/two-part', title: 'Task 2: Two-part questions' },
       { href: '/writing/task-2/positive-negative', title: 'Task 2: Positive or negative development' },
+      { href: '/writing/task-2/cause-effect', title: 'Task 2: Cause and effect' },
+      { href: '/writing/task-2/mixed', title: 'Task 2: Mixed and combined questions', sub: 'Questions with two or three parts' },
       { href: '/writing/ideas', title: 'Generating ideas: the idea bank', sub: '10 common topics with arguments and examples' }
     ]
   },
@@ -85,7 +95,21 @@ export const bookParts: TocPart[] = [
       { href: '/speaking/topics', title: 'Part 1 topic bank' },
       { href: '/speaking/cue-cards', title: 'Part 2 cue cards' },
       { href: '/speaking/phrases', title: 'Speaking phrases & idioms' },
-      { href: '/speaking/pronunciation', title: 'Pronunciation' }
+      { href: '/speaking/pronunciation', title: 'Pronunciation: quick guide' },
+      { href: '/speaking/pronunciation/sounds', title: 'Pronunciation: the sounds of English (IPA)' },
+      { href: '/speaking/pronunciation/word-stress', title: 'Pronunciation: word stress' },
+      { href: '/speaking/pronunciation/sentence-stress', title: 'Pronunciation: sentence stress, rhythm and intonation' },
+      { href: '/speaking/pronunciation/connected-speech', title: 'Pronunciation: connected speech' },
+      { href: '/speaking/pronunciation/intelligibility', title: 'Pronunciation: intelligibility and common difficulties' }
+    ]
+  },
+  {
+    id: 'bands', title: 'Band score development', intro: 'What distinguishes each band from 4 to 9, with sample answers and commentary – and how to close the gap to your target.',
+    chapters: [
+      { href: '/bands', title: 'Band levels from 4 to 9', sub: 'How each skill develops; half bands; measuring your gap' },
+      { href: '/bands/writing', title: 'Writing at every band', sub: 'One Task 2 question, four answers, full commentary' },
+      { href: '/bands/speaking', title: 'Speaking at every band', sub: 'One Part 3 question, four answers, full commentary' },
+      { href: '/bands/listening-reading', title: 'Listening and Reading by band', sub: 'Error profiles and what to practise next' }
     ]
   },
   {
@@ -115,25 +139,49 @@ export const bookParts: TocPart[] = [
       { href: '/grammar/future-continuous', title: 'Tenses: Future continuous' },
       { href: '/grammar/future-perfect', title: 'Tenses: Future perfect' },
       { href: '/grammar/future-perfect-continuous', title: 'Tenses: Future perfect continuous' },
-      { href: '/grammar/sentence-types', title: 'Sentence types: simple, compound, complex' },
-      { href: '/grammar/clauses', title: 'Relative, noun & adverbial clauses' },
-      { href: '/grammar/agreement', title: 'Subject–verb agreement' },
-      { href: '/grammar/conditionals', title: 'Conditionals' },
-      { href: '/grammar/passive', title: 'The passive voice' },
-      { href: '/grammar/comparatives', title: 'Comparison structures' },
-      { href: '/grammar/advanced', title: 'Advanced structures for Band 7–9' },
-      { href: '/grammar/punctuation', title: 'Punctuation & sentence boundaries' },
-      { href: '/grammar/common-errors', title: 'Common grammar & word errors' },
-      { href: '/grammar/paraphrasing', title: 'Paraphrasing techniques' }
+      { href: '/grammar/subject-predicate', title: 'Sentences: Subject, predicate and clauses', sub: 'The seven clause patterns; fragments and run-ons' },
+      { href: '/grammar/sentence-types', title: 'Sentences: Simple, compound, complex' },
+      { href: '/grammar/clauses', title: 'Sentences: Relative, noun & adverbial clauses' },
+      { href: '/grammar/agreement', title: 'Sentences: Subject–verb agreement' },
+      { href: '/grammar/conditionals', title: 'Sentences: Conditionals' },
+      { href: '/grammar/passive', title: 'Sentences: Active and passive voice' },
+      { href: '/grammar/reported-speech', title: 'Sentences: Direct and reported speech' },
+      { href: '/grammar/sentence-transformation', title: 'Sentences: Sentence transformation', sub: 'The grammar of paraphrase' },
+      { href: '/grammar/modals', title: 'Advanced: Modal verbs', sub: 'Recommending and hedging' },
+      { href: '/grammar/gerunds-infinitives', title: 'Advanced: Gerunds and infinitives' },
+      { href: '/grammar/participles', title: 'Advanced: Participles and participle clauses' },
+      { href: '/grammar/phrasal-verbs', title: 'Advanced: Phrasal verbs – the grammar' },
+      { href: '/grammar/comparatives', title: 'Advanced: Comparison structures' },
+      { href: '/grammar/parallelism', title: 'Advanced: Parallel structure' },
+      { href: '/grammar/inversion', title: 'Advanced: Inversion' },
+      { href: '/grammar/emphasis-cleft', title: 'Advanced: Emphasis and cleft sentences' },
+      { href: '/grammar/advanced', title: 'Advanced: Structures for Band 7–9' },
+      { href: '/grammar/punctuation', title: 'Advanced: Punctuation & sentence boundaries' },
+      { href: '/grammar/common-errors', title: 'Advanced: Common grammar & word errors' },
+      { href: '/grammar/grammar-for-writing', title: 'Grammar for IELTS Writing', sub: 'Controlled complexity, sentence improvement, proofreading' },
+      { href: '/grammar/paraphrasing', title: 'Grammar for IELTS Writing: Paraphrasing techniques' }
     ]
   },
   {
     id: 'vocabulary', title: 'Vocabulary', intro: 'Word banks with spaced-repetition flashcards, linking words, phrasal verbs and collocations.',
     chapters: [
-      { href: '/vocabulary', title: 'The vocabulary bank', sub: '19 banks with flashcards and quizzes' },
+      { href: '/vocabulary', title: 'The vocabulary bank', sub: 'Every word bank, with flashcards and quizzes' },
+      { href: '/vocabulary/topics', title: 'Topic vocabulary: 26 IELTS topics', sub: 'How to learn topic collocations, with a bank for every topic' },
       { href: '/vocabulary/linking', title: 'Connecting words: linking & cohesion' },
       { href: '/vocabulary/phrasal', title: 'Phrasal verbs' },
       { href: '/vocabulary/collocations', title: 'Collocations' }
+    ]
+  },
+  {
+    id: 'advanced', title: 'Advanced English beyond the exam', intro: 'Critical thinking, argument, summarising, note-taking, research and presentation skills.',
+    chapters: [
+      { href: '/advanced', title: 'Advanced English: overview' },
+      { href: '/advanced/critical-thinking', title: 'Critical thinking and logical reasoning' },
+      { href: '/advanced/argument', title: 'Building an argument' },
+      { href: '/advanced/summarising', title: 'Paraphrasing and summarising' },
+      { href: '/advanced/note-taking', title: 'Note-taking' },
+      { href: '/advanced/research', title: 'Academic reading and research skills' },
+      { href: '/advanced/presentations', title: 'Presentation and discussion skills' }
     ]
   },
   {
